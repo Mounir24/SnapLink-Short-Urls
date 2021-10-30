@@ -83,17 +83,17 @@ exports.registerUser = async (req, res, next) => {
                 let user_geo = {};
 
                 try {
-                    user_geo.ip = req.headers['X-Forwarded-For'] || req.connection.remoteAddress;
+                    /*user_geo.ip = req.headers['X-Forwarded-For'] || req.connection.remoteAddress;
                     await axios.get(`https://ipapi.co/${user_geo.ip}/json/`)
                         .then(async (data) => {
                             user_geo.country = data.data.country_name;
                             user_geo.country_flag = `https://flagcdn.com/w320/${data.data.country.toLowerCase()}.png`;
-                            /*await axios.get(`https://flagcdn.com/w320/${data.data.country.toLowerCase()}.png`)
+                            await axios.get(`https://flagcdn.com/w320/${data.data.country.toLowerCase()}.png`)
                                 .then(data => {
                                     user_geo.country_flag = data.data[0].flag;
-                                })*/
-                        })
-                    /*await axios.get('https://api.ipify.org?format=json')
+                                })
+                        })*/
+                    await axios.get('https://api.ipify.org?format=json')
                         .then(async (data) => {
                             user_geo.ip = data.data.ip;
                             await axios.get(`https://ipapi.co/${data.data.ip}/json/`)
@@ -105,7 +105,7 @@ exports.registerUser = async (req, res, next) => {
                                             user_geo.country_flag = data.data[0].flag;
                                         })
                                 })
-                        })*/
+                        })
                 } catch (err) {
                     const optsMail = {
                         from: process.env.EMAIL,
