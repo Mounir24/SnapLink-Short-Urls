@@ -72,6 +72,8 @@ exports.registerUser = async (req, res, next) => {
     try {
         // CHECK IF USER EMAIL EXIST OR NOT
         await User.findOne({ email }, (err, user) => {
+            // CHECK FOR ERROR
+            if (err) return next(createError(400, "Failed: Something went wrong!"));
             if (user) {
                 return res.status(400).json({ message: { status: 'exist', msg: `${user.username} Already Exist` } });
             }

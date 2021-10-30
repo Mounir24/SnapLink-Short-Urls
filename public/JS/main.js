@@ -48,7 +48,7 @@ arr_obj.desc.map(desc => {
 })
 const signupBtn = document.querySelector('.signup-btn');
 const formArea = document.getElementById('user-signup');
-$('#user-signup').submit((e) => {
+$('#user-signup').submit(async (e) => {
     e.preventDefault();
     signupBtn.style.opacity = 0.4;
     signupBtn.innerText = 'Creating...';
@@ -61,9 +61,10 @@ $('#user-signup').submit((e) => {
     if (!validator.isEmail(data.email) || !data.email.match(pattern)) { return alert('Email Field Must Be Valid!') }
     if (validator.isLength(data.password, 6)) { return alert('Password Length is Short! Must be More than 6 characters!') }
     if (validator.isLength(data.username, 6)) { return alert('Username is too short! Must be more than 6 characters') }
-    fetch(`${BASE_URL}/api/register`, { method: 'POST', headers: { 'Content-Type': 'Application/json' }, body: JSON.stringify(data) }).then(response => response.json()).then(data => {
+    await fetch(`${BASE_URL}/api/register`, { method: 'POST', headers: { 'Content-Type': 'Application/json' }, body: JSON.stringify(data) }).then(response => response.json()).then(data => {
         signupBtn.style.opacity = 1;
         signupBtn.innerText = 'Sign up';
+        console.log(data);
         if (data.responseCode === 1) {
             if (data.confirmation === 'warning') {
                 alertWarning.classList.add('show_warning');
