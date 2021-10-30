@@ -2,7 +2,7 @@
 // MINI BLOG REST API CREATED BY  ** MOUNIR EL BERTOULI **
 
 /*----- START -----*/
-const BASE_URL3 = 'http://localhost:4041';
+const BASE_URL3 = 'https://short-url-snaplink.herokuapp.com';
 
 // INITIATE THE HELPER FUNCTION (GetBlogData)
 const GET_BLOG_DATA = async (url = '', data = {}, method = '') => {

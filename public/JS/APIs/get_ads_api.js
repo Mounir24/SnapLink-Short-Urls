@@ -1,11 +1,11 @@
 // URL ENDPOINTS - BASE URL
-const BASE_URL = "http://localhost:4041";
+const BASE_URL = "https://short-url-snaplink.herokuapp.com";
 const API_URL = `${BASE_URL}${atob('L2FkbWluL2FwaS92MS9hZHM=')}`;
 
 //GET DOM ELEMENTS 
 const ads_body_row = document.getElementById('ads_body_row');
 // GET REQUEST FUNCTION
-(async function() {
+(async function () {
     await fetch(API_URL).then(res => res.json())
         .then(payload_data => {
             if (payload_data.confirmation) {
@@ -32,7 +32,7 @@ const ads_body_row = document.getElementById('ads_body_row');
                     banner_img.src = ad.banner;
                     link.append(banner_img);
                     console.log(link)
-                        // APPEND CONTENT TO  NEW DOM ELEMENTS 
+                    // APPEND CONTENT TO  NEW DOM ELEMENTS 
                     ad_col1.innerHTML = ad.title;
                     ad_col2.innerHTML = `$${ad.budget}`;
                     ad_col3.innerHTML = ad.period;
@@ -42,7 +42,7 @@ const ads_body_row = document.getElementById('ads_body_row');
                     ad_col6.setAttribute('class', 'ad_banner');
                     ad_col7.innerHTML = "<span class='badge badge-rounded'>Active</span>";
                     ad_col8.innerHTML = "<div class='actions-wrapper'><span class='reject-icon-wrapper' ad-id='12345'><i class='bx bx-x'></i></span>  <span class='approve-icon-wrapper' ad-id='12345'><i class='bx bx-check-double' ></i></span></div>"
-                        // APPEND COLUMNS ELEMENTS TO THE ADS_ROW
+                    // APPEND COLUMNS ELEMENTS TO THE ADS_ROW
                     ads_row.append(ad_col1);
                     ads_row.append(ad_col2);
                     ads_row.append(ad_col3);
@@ -68,7 +68,7 @@ const pending_ads_row = document.getElementById('pending_ads_body_row');
 
 // GET REQUEST TO: /api/v1/pending_plans
 const API_ENDPOINT = `${BASE_URL}${atob('L2FkbWluL2FwaS92MS9wZW5kaW5nX3BsYW5z')}`;
-(async function() {
+(async function () {
     // TRANSMIT GET REQUEST
     await fetch(API_ENDPOINT).then(res => res.json())
         .then(data => {

@@ -17,7 +17,7 @@ const adminRoute = require('./routes/adminRoute');
 const httpLogger = require('./services/util/logger/logger')
 
 // WHITELIST 
-const whitelist = ['http://localhost:4041', 'https://cdnjs.cloudflare.com', 'https://cdn.deliver.net', 'https://restcountries.eu', 'https://unpkg.com', 'https://cdn.onlymega.com'];
+const whitelist = ['https://cdnjs.cloudflare.com', 'https://cdn.deliver.net', 'https://restcountries.eu', 'https://unpkg.com', 'https://cdn.onlymega.com'];
 // CORS Options 
 const corsOptions = {
     origin: (origin, callback) => {

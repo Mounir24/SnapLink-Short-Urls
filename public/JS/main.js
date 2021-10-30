@@ -1,14 +1,14 @@
-$(function() { $('[data-toggle="tooltip"]').tooltip() })
+$(function () { $('[data-toggle="tooltip"]').tooltip() })
 document.addEventListener('DOMContentLoaded', () => {
     const loader = document.getElementById('loader');
     loader.style.display = 'none'
 })
-const POST_DATA2 = async(url = '', data, method = '') => {
+const POST_DATA2 = async (url = '', data, method = '') => {
     const response = await fetch(url, { method: method, headers: { "Content-Type": "Application/json" }, body: JSON.stringify(data) })
     return response.json()
 }
 const CUSTOM_ALERTS = (TP, title = '', txt) => { if (TP === 'success') { swal({ title: title, text: txt, icon: TP, button: "GOT IT" }); return } else if (TP === 'warning') { swal({ title: title, text: txt, icon: TP, button: "GOT IT", }) } else if (TP === 'DangerMode') { swal({ title: 'Are You Sure ?', text: "Are Sure wanna Unblock This User ? ", icon: "warning", buttons: !0, dangerMode: !0, }).then((willDelete) => { if (willDelete) { swal(txt, { icon: "success", }); return } }) } else { return null } }
-const BASE_URL = 'http://localhost:4041';
+const BASE_URL = 'https://short-url-snaplink.herokuapp.com';
 const alertWarning = document.getElementById('alert_warn')
 const alertDanger = document.getElementById('alert_danger');
 const validator = { isEmpty(str) { if (str.trim() === '') { return !0 } else { return !1 } }, isEmail(email) { const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; if (email.match(emailPattern)) { return !0 } else { return !1 } }, isLength(str, lng) { if (str.length < lng) { return !0 } else { return !1 } } }
@@ -54,7 +54,7 @@ $('#user-signup').submit((e) => {
     signupBtn.innerText = 'Creating...';
     const unindexed__arr = $('#user-signup').serializeArray();
     let data = {};
-    $.map(unindexed__arr, function(n, i) { data[n.name] = n.value });
+    $.map(unindexed__arr, function (n, i) { data[n.name] = n.value });
     const captcha = $('#g-recaptcha-response').val();
     data.captcha = captcha;
     const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9]{2,4}$/;
@@ -93,7 +93,7 @@ $('#user-login').submit((e) => {
     loginBtn.style.cursor = 'not-allowed';
     const unindexed__arr = $('#user-login').serializeArray();
     let data = {};
-    $.map(unindexed__arr, function(n, i) { data[n.name] = n.value });
+    $.map(unindexed__arr, function (n, i) { data[n.name] = n.value });
     const captcha = $('#g-recaptcha-response').val();
     data.captcha = captcha;
     fetch(`${BASE_URL}/api/login`, { method: "POST", headers: { "Content-Type": "Application/json" }, body: JSON.stringify(data) }).then(response => response.json()).then(data => {
@@ -129,7 +129,7 @@ $('#admin-login').submit((e) => {
     loginBtn.style.cursor = 'not-allowed';
     const unindexed__arr = $('#admin-login').serializeArray();
     let data = {};
-    $.map(unindexed__arr, function(n, i) { data[n.name] = n.value });
+    $.map(unindexed__arr, function (n, i) { data[n.name] = n.value });
     const captcha = $('#g-recaptcha-response').val();
     data.captcha = captcha;
     fetch(`${BASE_URL}/api/admin/login`, { method: "POST", headers: { "Content-Type": "Application/json" }, body: JSON.stringify(data) }).then(response => response.json()).then(data => {
@@ -293,7 +293,7 @@ $('#url_form').submit(e => {
     short_btn.style.cursor = 'not-allowed';
     const unindexed_arr = $('#url_form').serializeArray();
     let data = {};
-    $.map(unindexed_arr, function(j, i) { data[j.name] = j.value });
+    $.map(unindexed_arr, function (j, i) { data[j.name] = j.value });
     POST_DATA2(`${BASE_URL}/v1/api/new`, data, 'POST').then(data => {
         short_btn.style.opacity = 1;
         short_btn.innerText = 'SHORT URL';

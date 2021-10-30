@@ -2,7 +2,7 @@
 // API FOR GRAPHCING DATA USAGE
 (async function () {
     // BASE URL
-    const BASE_URL1 = 'http://localhost:4041'
+    const BASE_URL1 = 'https://short-url-snaplink.herokuapp.com'
     // FETCH DATA FROM API 
     const URLS_DATA_API = `${BASE_URL1}/v1/api/all`;
     await fetch(URLS_DATA_API)
@@ -58,7 +58,7 @@
 
 (async function () {
     // BASE URL
-    const BASE_URL2 = 'http://localhost:4041';
+    const BASE_URL2 = 'https://short-url-snaplink.herokuapp.com';
     // FETCH DATA FROM API 
     await fetch(`${BASE_URL2}/admin/api/urls-sources`)
         .then(response => response.json())
