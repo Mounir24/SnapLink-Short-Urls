@@ -142,16 +142,7 @@ document.getElementById('ad-form-btn').addEventListener('click', async () => {
     }).catch(err => {
         console.log(err);
     })
-})
-const response = await fetch(url,
-    {
-        method: method,
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    });
-return response.json()
+});
 
 // BASE URL
 /*const SNP_BASE_URL = 'http://localhost:4041';

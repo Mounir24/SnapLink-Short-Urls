@@ -715,7 +715,7 @@ tbody > tr a {
 }
 
 .hero__content > .hero__buttons > .short-btn a,
-.signup-btn a {
+.signup-btn-hero a {
   text-decoration: none;
   color: #fff;
   font-family: "rajdhani", sans-serif;
@@ -723,11 +723,11 @@ tbody > tr a {
   font-size: 16px;
 }
 
-.hero__content > .hero__buttons > .signup-btn {
+.hero__content > .hero__buttons > .signup-btn-hero {
   padding: 10px 30px;
   outline: none;
   border: none;
-  background: hsl(163, 83%, 54%);
+  background: linear-gradient(70deg, hsl(224, 76%, 59%), hsl(225, 40%, 72%));
   border-radius: 24px;
   margin-left: 1.5rem;
 }

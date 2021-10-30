@@ -7,7 +7,7 @@ const dbConnection = require('./configuration/connection');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const helmet = require('helmet'); // Helmet Security Package
-const session = require('express-session');
+//const session = require('express-session');
 
 
 // Import Files (Packages)
@@ -38,8 +38,8 @@ app.use(helmet.ieNoOpen());
 app.use(helmet.hsts({ maxAge: 24 * 60 * 60 })); // FORCE HTTPS ONLY 
 app.use(helmet.dnsPrefetchControl());
 app.use(helmet.noSniff())
-app.use(helmet.contentSecurityPolicy({
-    useDefaults: false,
+/*app.use(helmet.contentSecurityPolicy({
+    useDefaults: true,
     directives: {
         "default-src": ["*", "'unsafe-inline'"],
         "script-src": ["*", "'unsafe-inline'"],
@@ -47,14 +47,14 @@ app.use(helmet.contentSecurityPolicy({
         "img-src": ["*", "data:", "blob:", "'unsafe-inline'"],
         upgradeInsecureRequests: []
     }
-})); // IMPLEMENT CONTENT SECURITY POLICY (CSP)
+}));*/ // IMPLEMENT CONTENT SECURITY POLICY (CSP)
 app.use(cors(corsOptions)); // EXECUTE THE CORS MODULE IN ALL ROUTES
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
 app.use(cookieParser());
 app.use(httpLogger); // HTTP TRAFFIC LOGGER MODULE
-app.use(session({ secret: process.env.SESSION_KEY, resave: true, saveUninitialized: true, cookie: { maxAge: 2628e+6 } }))
+//app.use(session({ secret: process.env.SESSION_KEY, resave: true, saveUninitialized: true, cookie: { maxAge: 2628e+6 } }))
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
@@ -84,7 +84,7 @@ app.use((err, req, res, next) => {
         console.log(decodeURIComponent(req.params));*/
         return res.redirect('/');
     }
-    //next();
+    next();
     res.status(err.status || 500).json({
         status: err.status || 500,
         error: err.message,
