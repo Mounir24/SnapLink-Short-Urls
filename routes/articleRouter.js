@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer'); // UPLOADING FILES MODULE
-const session = require('express-session');
+//const session = require('express-session');
 
 // IMPORT CONTROLLERS MODULE
 const articlesCtrl = require('../controllers/articleController'); // ARTICLES CONTROLLER
@@ -10,7 +10,7 @@ const articlesCtrl = require('../controllers/articleController'); // ARTICLES CO
 const services = require('../services/staticsRoutes');
 
 // MIDDLWARES
-const session_store = session({ secret: process.env.SESSION_KEY, resave: true, saveUninitialized: true });
+//const session_store = session({ secret: process.env.SESSION_KEY, resave: true, saveUninitialized: true });
 
 
 // INITIALE THE MULTER DISK STORAGE
