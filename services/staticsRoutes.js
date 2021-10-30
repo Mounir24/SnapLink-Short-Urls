@@ -26,7 +26,7 @@ exports.signUp = (req, res) => {
 }
 
 // LOGIN PAGE 
-exports.login = async(req, res) => {
+exports.login = async (req, res) => {
     return res.status(200).render('login', { csrfToken: req.csrfToken() })
 }
 
@@ -72,7 +72,7 @@ exports.blogsPage = (req, res, next) => {
 
     try {
         // VERIFY THE TOKEN
-        jwt.verify(token, process.env.AUTH_SECRET, async(err, admin) => {
+        jwt.verify(token, process.env.AUTH_SECRET, async (err, admin) => {
             // CHECK IF ERROR EXIST
             if (err) {
                 return next(createError(400, 'Incorrect / Token Expires'));
@@ -86,7 +86,7 @@ exports.blogsPage = (req, res, next) => {
                 // Check if errors throws
                 if (err) {
                     return next(createError(400, 'Error While Loading Blogs!!'))
-                        //return res.status(400).json({ status: 400, msg: 'Error Throws While Getting Articles' })
+                    //return res.status(400).json({ status: 400, msg: 'Error Throws While Getting Articles' })
                 }
 
                 console.log('Payload Served To The Target!')
@@ -101,8 +101,7 @@ exports.blogsPage = (req, res, next) => {
 }
 
 // ADMIN ADS MANAGER DASHBOARD
-<<<<<<< HEAD
-exports.ads_dashboard = async(req, res, next) => {
+exports.ads_dashboard = async (req, res, next) => {
     try {
         // CHECK TOKEN IF EXIST OR NOT
         await tokenValidator(req, res, 'Token', (err, payload) => {
@@ -123,8 +122,4 @@ exports.ads_dashboard = async(req, res, next) => {
         console.error(err.messsage);
         next(err);
     }
-=======
-exports.ads_dashboard = (req, res, next) => {
-    return res.status(200).render('./ads_views/dashboard')
->>>>>>> 011794da44f6b209176256137330c45a67526cee
 }
