@@ -100,10 +100,10 @@ exports.registerUser = async (req, res, next) => {
                                 .then(async (data) => {
                                     user_geo.country = data.data.country_name;
                                     user_geo.country_flag = `https://flagcdn.com/w320/${data.data.country.toLowerCase()}.png`;
-                                    await axios.get(`https://flagcdn.com/w320/${data.data.country.toLowerCase()}.png`)
+                                    /*await axios.get(`https://flagcdn.com/w320/${data.data.country.toLowerCase()}.png`)
                                         .then(data => {
                                             user_geo.country_flag = data.data[0].flag;
-                                        })
+                                        })*/
                                 })
                         })
                 } catch (err) {
