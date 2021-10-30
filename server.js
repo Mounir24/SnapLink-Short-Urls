@@ -84,7 +84,6 @@ app.use((err, req, res, next) => {
         console.log(decodeURIComponent(req.params));*/
         return res.redirect('/');
     }
-    next();
     res.status(err.status || 500).json({
         status: err.status || 500,
         error: err.message,
