@@ -1681,6 +1681,12 @@ exports.verifyTokenAccess = async (req, res, next) => {
                 const black_list_ips = [];
                 return res.status(401).redirect('/sign-up');
             } else {
+                // UPDATE WITH CURRENT IP
+                await axios.get('https://api.ipify.org?format=json').then(data => {
+                    user.geo[0]['ip'] = data.data.ip;
+                });
+
+
                 console.log('USER: ' + username + ' Authenticate Successfully 100%');
                 // SIGN NEW TOKEN
                 const ACCESS_TOKEN = jwt.sign({ id: user._id, username, isBlocked: user.isBlocked, privateUrls: user.private_urls }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
