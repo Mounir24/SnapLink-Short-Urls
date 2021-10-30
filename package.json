@@ -21,7 +21,6 @@
         "dotenv": "^8.6.0",
         "ejs": "^3.1.6",
         "express": "^4.17.1",
-        "express-session": "^1.17.2",
         "helmet": "^4.6.0",
         "http-errors": "^1.8.0",
         "jsonwebtoken": "^8.5.1",
