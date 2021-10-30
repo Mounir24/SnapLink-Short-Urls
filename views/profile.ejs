@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="/svg/snapLink-logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- BOOTSTRAP 4 CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <!-- BOX ICONS CSS (CDN) -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- OWN CSS FILE -->
+    <link rel="stylesheet" href="/CSS/style.css">
+    <title>
+        <%= user.username %> || Profile
+    </title>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top px-5">
+        <a class="navbar-brand" href="/">
+            <!--<i class='bx bxl-nodejs'></i>-->
+            <img src="/svg/link.png" alt="SnapLink Logo" class="img-fluid">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex justify-content-center align-items-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Social Media
+                    </a>
+                    <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="https://www.facebook.com/rida.momo.3367/" target="_blank"><i
+                                class='bx bxl-facebook'> </i> Facebook</a>
+                        <a class="dropdown-item" href="https://www.instagram.com/mounirbr24/" target="_blank"><i
+                                class='bx bxl-instagram'> </i> Instagram</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="https://www.youtube.com/channel/UCPxXadNk_tTpmqc8DAr3Mfw"
+                            target="_blank"><i class='bx bxl-youtube'> </i> YouTube channel</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/support">support</a>
+                </li>
+            </ul>
+        </div>
+        <!-- USER PROFILE -->
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown dropleft">
+                <a class=" nav-link dropdown-toggle dropleft" href="#" id="navbarDropdown" role="link"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="/svg/user.png" alt="User_Profile" class="img-fluid">
+                </a>
+                <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item d-flex justify-content-start align-items-center"><i class='bx bx-user'></i>user: <%= user.username %></a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/short-url"><i class='bx bx-link'></i>Short Url</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/profile"><i class='bx bx-cog'></i>Profile</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/logout"><i class='bx bx-log-out-circle'></i>Log out</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- PRE-LOADING ANIMATION -->
+    <div class="pre-loader_wrapper" id="loader">
+        <img src="/svg/loader_ring.gif" alt="Loading..." class="img-fluid">
+    </div>
+    <div class="container profile__section w-100 ">
+        <!-- COVER SECTION -->
+        <div class="cover__wrapper">
+            <!-- COVER PRPFILE AREA -->
+            <div class="cover__banner">
+                <img src="/IMG/user-people-network-circuit-board-link-connection-technology.jpg" alt="User Cover"
+                    class="img-fluid">
+            </div>
+            <div class="user__profile">
+                <div class="img__holder">
+                    <img src="/svg/user.png" alt="user profile" class="img-fluid">
+                </div>
+                <div class="user_label">
+                    <span class="user_name">
+                        <%= user.username %>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- USER INFO SECTION -->
+    <div class="container user_info_area">
+        <h2 class="label mx-auto">User Info</h2>
+        <div class="row mx-auto">
+            <div class="col-md-10">
+                <div class="info_wrapper">
+                    <form>
+                        <div class="form-group col-md-4 mr-3">
+                            <label for="email">Email address:</label>
+                            <input type="text" class="form-control" value="<%= user.email %>" id="email" disabled>
+                        </div>
+                        <div class="form-group col-md-4 mr-3">
+                            <label for="date">Joined At:</label>
+                            <input type="text" class="form-control" value="<%= user.joined_at %>" id="email" disabled>
+                        </div>
+                        <div class="form-group col-md-4 mr-3">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control" value="<%= user.username %>" id="username" disabled>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ANALYTICS SECTION (URLS - CLICKS) -->
+    <section class="user-analytics-area w-100">
+        <div class="container">
+            <h2 class="analytics-label">Analytics</h2>
+            <div class="row mx-auto w-100">
+                <div class="col-md-6">
+                    <div class="chart-analytics-bx">
+                        <canvas id="user-analytics-chart" width="100" height="100"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="chart-analytics-bx">
+                        <canvas id="user-url-source" width="100" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- USER PRIVATE URLS TABLE -->
+    <div class="container urls_list">
+        <h2 class="label mx-auto">My Own Urls</h2>
+        <div class="row mx-auto">
+            <div class="col-md-10">
+                <table class="table table-striped mt-5 text-center w-100">
+                    <thead class="thead-bg text-center">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Original Url</th>
+                            <th scope="col">Short Url</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% user.private_urls.map((url, index)=> { %>
+                            <tr class="text-center">
+                                <td>
+                                    <span class="url_count">
+                                        <%= index +1 %>
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="url">
+                                        <%= url.original_url %>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" class="ipt-trgt" readonly="true" value="<%= url.url%>">
+
+                                    <i class='bx bx-copy cpy-btn' title="copy"></i>
+                                </td>
+                                <td>
+                                    <span class="date">
+                                        <%= url.date %>
+                                    </span>
+                                </td>
+                            </tr>
+                            <%}) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--CHART ANIMATION JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript">
+        const user_src = '<%= user.private_urls.length %>';
+        var ctx = document.getElementById('user-analytics-chart');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Total URLs', 'Total Clicks'],
+                datasets: [{
+                    label: 'SnapLink Simple Analytics',
+                    data: [user_src, 19],
+                    backgroundColor: [
+                        'hsl(210, 85%, 48%)',
+                        'hsl(163, 83%, 54%)',
+                    ],
+                    /*borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],*/
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        var ctx = document.getElementById('user-url-source');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['www.facebook.com', 'www.mbn.agency', 'www.youtube.com', 'www.twitter.co', 'www.facebook.com', 'www.mbn.agency', 'www.youtube.com', 'www.twitter.co'],
+                datasets: [{
+                    label: 'SnapLink Simple Analytics',
+                    data: [user_src, 19, 24, 5, 19, 24, 5, 87],
+                    backgroundColor: [
+                        'hsl(210, 85%, 48%)',
+                        'hsl(163, 83%, 54%)',
+                        'hsl(54, 74%, 52%)',
+                        'hsl(100, 50%, 30%)',
+                        'hsl(210, 85%, 48%)',
+                        'hsl(163, 83%, 54%)',
+                        'hsl(54, 74%, 52%)',
+                        'hsl(100, 50%, 30%)',
+                    ],
+                    /*borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],*/
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+    </script>
+    <%- include('partials/_footer.ejs') %>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<<<<<<< HEAD
+
+=======
+>>>>>>> 011794da44f6b209176256137330c45a67526cee
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/svg/snapLink-logo.svg" />
+    <!-- Bootstrap CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Slick Carousel CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" />
+<<<<<<< HEAD
+    <!-- DISPLAY ALL ADS  -->
+    <script src="/JS/APIs/get_ads_api.js" async></script>
+=======
+>>>>>>> 011794da44f6b209176256137330c45a67526cee
+    <!-- Own CSS File -->
+    <link rel="stylesheet" href="../../CSS/style.css">
+    <title>SnapLink || Ads Manager</title>
+</head>
+<<<<<<< HEAD
+
+<body>
+    <%- include('../partials/_header.ejs') %>
+        <main class="container-fluid mngr-dash-section">
+            <div class="container">
+                <!-- ROW ONE -->
+                <div class="row mx-auto w-100 mb-4">
+                    <div class="col-md-4">
+                        <div class="pannel_box" data-tilt>
+                            <div class="pannel__content text-center">
+                                <!-- PANNEL LABEL -->
+                                <span class="pannel_label">Total Amount</span>
+                                <span class="pannel_number">
+                                $19.99
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pannel_box" data-tilt>
+                            <div class="pannel__content text-center">
+                                <!-- PANNEL LABEL -->
+                                <span class="pannel_label">Total Clicks</span>
+                                <span class="pannel_number">
+                                1739
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pannel_box" data-tilt>
+                            <div class="pannel__content text-center">
+                                <!-- PANNEL LABEL -->
+                                <span class="pannel_label">Ads Active</span>
+                                <span class="pannel_number">
+                                6
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ROW TWO -->
+                <div class="row w-100 mb-4">
+                    <div class="col-md-6">
+                        <h2 class="dash_label mx-auto">New Compaign</h2>
+                        <div class="dash-side-left w-100">
+                            <form id="ad-mngr-form" class="ads-form-area">
+                                <div class="container">
+                                    <!-- ROW 1 -->
+                                    <div class="form-row w-100">
+                                        <div class="form-group col-md-12 mb-3">
+                                            <!--<label for="ad-title">Ad Name</label>-->
+                                            <input type="text" class="form-control ad-title" name="ad-title" id="ad-title" placeholder="Enter AD Title">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <!--<label for="ad-period">AD Period</label>-->
+                                            <input type="date" class="form-control" name="ad-period" id="ad-period" placeholder="Enter AD Period">
+                                        </div>
+                                    </div>
+                                    <!-- ROW 2 -->
+                                    <div class="form-row w-100 mx-auto mb-3">
+                                        <div class="form-group col-md-12 mb-3">
+                                            <!--<label for="ad-budget">AD Budget</label>-->
+                                            <input type="number" class="form-control" name="ad-budget" min="1" max="60" id="ad-budget" placeholder="Enter AD Budget">
+                                        </div>
+                                        <div class="custom-file col-md-12">
+                                            <input type="file" name="ad-banner" class="custom-file-input" id="ad-banner">
+                                            <label class="custom-file-label" for="ad-banner">Choose Banner</label>
+                                        </div>
+                                    </div>
+                                    <!-- ROW 3 -->
+                                    <div class="form-row w-100 mx-auto mb-3">
+                                        <div class="form-group col-md-12 mb-3">
+                                            <select name="ad-size" class="custom-select">
+=======
+<body>
+        <%- include('../partials/_header.ejs') %>
+    <main class="container-fluid mngr-dash-section">
+        <div class="container">
+            <!-- ROW ONE -->
+            <div class="row mx-auto w-100 mb-4">
+                <div class="col-md-4">
+                    <div class="pannel_box" data-tilt>
+                        <div class="pannel__content text-center">
+                            <!-- PANNEL LABEL -->
+                            <span class="pannel_label">Total Amount</span>
+                            <span class="pannel_number">
+                                $19.99
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pannel_box" data-tilt>
+                        <div class="pannel__content text-center">
+                            <!-- PANNEL LABEL -->
+                            <span class="pannel_label">Total Clicks</span>
+                            <span class="pannel_number">
+                                1739
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pannel_box" data-tilt>
+                        <div class="pannel__content text-center">
+                            <!-- PANNEL LABEL -->
+                            <span class="pannel_label">Ads Active</span>
+                            <span class="pannel_number">
+                                6
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ROW TWO -->
+            <div class="row w-100 mb-4">
+                <div class="col-md-6">
+                    <h2 class="dash_label mx-auto">New Compaign</h2>
+                    <div class="dash-side-left w-100">
+                        <form id="ad-mngr-form" class="ads-form-area">
+                            <div class="container">
+                                <!-- ROW 1 -->
+                                <div class="form-row w-100">
+                                    <div class="form-group col-md-12 mb-3">
+                                        <!--<label for="ad-title">Ad Name</label>-->
+                                        <input type="text" class="form-control ad-title" name="ad-title" id="ad-title" placeholder="Enter AD Title">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <!--<label for="ad-period">AD Period</label>-->
+                                        <input type="date" class="form-control" name="ad-period" id="ad-period" placeholder="Enter AD Period">
+                                    </div>
+                                </div>
+                                <!-- ROW 2 -->
+                                <div class="form-row w-100 mx-auto mb-3">
+                                    <div class="form-group col-md-12 mb-3">
+                                        <!--<label for="ad-budget">AD Budget</label>-->
+                                        <input type="number" class="form-control" name="ad-budget" min="1" max="60" id="ad-budget" placeholder="Enter AD Budget">
+                                    </div>
+                                    <div class="custom-file col-md-12">
+                                        <input type="file" name="ad-banner" class="custom-file-input" id="ad-banner">
+                                        <label class="custom-file-label" for="ad-banner">Choose Banner</label>
+                                    </div>
+                                </div>
+                                <!-- ROW 3 -->
+                                <div class="form-row w-100 mx-auto mb-3">
+                                    <div class="form-group col-md-12 mb-3">
+                                        <select name="ad-size" class="custom-select">
+>>>>>>> 011794da44f6b209176256137330c45a67526cee
+                                            <option value="720x90">720x90</option>
+                                            <option value="468x60">468x60</option>
+                                            <option value="320x50">320x50</option>
+                                        </select>
+<<<<<<< HEAD
+                                        </div>
+                                        <div class="custom-file col-md-12">
+                                            <!--<label for="ad-owner">Ad Owner</label>-->
+                                            <input type="text" class="form-control ad-owner" name="ad-owner" id="ad-owner" placeholder="Enter AD Owner">
+                                        </div>
+                                    </div>
+                                    <!-- ROW 4 -->
+                                    <div class="form-row W-100 mb-3">
+                                        <div class="form-group col-md-12 mb-3">
+                                            <!--<label for="ad-email">AD E-mail</label>-->
+                                            <input type="email" class="form-control" name="ad-email" id="ad-email" placeholder="Enter AD E-mail">
+                                        </div>
+                                        <div class="custom-file col-md-12">
+                                            <!--<label for="ad-url">Ad URL</label>-->
+                                            <input type="text" class="form-control ad-url" name="ad-url" id="ad-url" placeholder="Enter AD URL">
+                                        </div>
+                                    </div>
+                                    <button type="button" id="ad-form-btn" class="btn ad-form-btn">Add Compaign</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- ANALYTICS DASHBOARD -->
+                    <div class="col-md-6">
+                        <h2 class="dash_label mx-auto">Ads Analytics</h2>
+                        <div class="dash-side-right">
+                            <canvas id="ads-chart-pie" width="100%" height="100%"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row mx-auto">
+                    <!-- PLANS REQUEST TABLE -->
+                    <div class="col-md-12 d-flex justify-content-center align-items-center flex-column">
+                        <h2 class="dash_label mx-auto">Pending Compagins (Unactive)</h2>
+                        <div class="pending_compaigns_area w-75">
+                            <table class="table table-striped mt-5 text-center">
+                                <thead class="thead-bg">
+                                    <tr>
+                                        <th scope="col">Ad Title</th>
+                                        <th scope="col">Ad Budget</th>
+                                        <th scope="col">Ad period</th>
+                                        <th scope="col">Owner Name</th>
+                                        <th scope="col">Owner E-mail</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Download Banner</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pending_ads_body_row">
+                                    <!--<tr>
+                                        <td>
+                                            <span class="compaign-title">SnapLink - Short URLs Service</span>
+                                        </td>
+                                        <td>
+                                            <span class="compaign-budget">$10.99</span>
+                                        </td>
+                                        <td>
+                                            <span class="compaign-period">
+                                            21/10/2021
+                                        </span>
+                                        </td>
+                                        <td>
+                                            <span class="compaign-owner">
+                                            Delary fulton
+                                        </span>
+                                        </td>
+                                        <td>
+                                            <span class="compaign-email">
+                                            Delary@gmail.com
+                                        </span>
+                                        </td>
+                                        <td>
+                                            <span class="compaign-status">
+                                            <span class="badge badge-rounded pending-badge">Pending</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="compaign-banner">
+                                            <a href="" style="text-decoration: none;" download="" class="download_banner_btn"><i class='bx bx-cloud-download'></i></a>
+                                        </span>
+                                        </td>
+                                        <td>
+                                            <div class="compaign-actions">
+                                                <a href="" data-id="" class="action_btn">
+                                                    <i class='bx bx-x'></i>
+                                                </a>
+                                                <a href="" data-id="" class="action_btn">
+                                                    <i class='bx bx-check-double'></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <!-- ROW THREE -->
+                <div class="row mx-auto">
+                    <div class="col-md-12 d-flex justify-content-center align-items-center flex-column">
+                        <h2 class="dash_label mx-auto"> All Active Compaigns</h2>
+                        <div class="ads-mngr-table-displayer w-75">
+                            <table class="table table-striped mt-5 text-center">
+                                <thead class="thead-bg">
+                                    <tr>
+                                        <th scope="col">AD Title</th>
+                                        <th scope="col">AD Amount</th>
+                                        <th scope="col">AD Date</th>
+                                        <th scope="col">AD Clicks</th>
+                                        <th scope="col">AD Owner</th>
+                                        <th scope="col">AD Banner</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ads_body_row">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!--CHART ANIMATION JS (CDN) -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- jQuery JS CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- SWEET ALERT JS (CDN) -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="/JS/chart_data.js"></script>
+        <script src="/JS/APIs/create_ad_api.js"></script>
+        <script src="/JS/APIs/get_ads_api.js"></script>
+        <%- include('../partials/_footer.ejs') %>
+=======
+                                    </div>
+                                    <div class="custom-file col-md-12">
+                                        <!--<label for="ad-owner">Ad Owner</label>-->
+                                        <input type="text" class="form-control ad-owner" name="ad-owner" id="ad-owner" placeholder="Enter AD Owner">
+                                    </div>
+                                </div>
+                                <!-- ROW 4 -->
+                                <div class="form-row W-100 mb-3">
+                                    <div class="form-group col-md-12 mb-3">
+                                        <!--<label for="ad-email">AD E-mail</label>-->
+                                        <input type="email" class="form-control" name="ad-email" id="ad-email" placeholder="Enter AD E-mail">
+                                    </div>
+                                    <div class="custom-file col-md-12">
+                                        <!--<label for="ad-url">Ad URL</label>-->
+                                        <input type="text" class="form-control ad-url" name="ad-url" id="ad-url" placeholder="Enter AD URL">
+                                    </div>
+                                </div>
+                                <button type="button" id="ad-form-btn" class="btn ad-form-btn">Add Compaign</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2 class="dash_label mx-auto">Ads Analytics</h2>
+                    <div class="dash-side-right">
+                        <canvas id="ads-chart-pie" width="100%" height="100%"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- ROW THREE -->
+            <div class="row mx-auto">
+            <div class="col-md-12">
+                <h2 class="dash_label mx-auto">Compaigns</h2>
+                <div class="ads-mngr-table-displayer">
+                    <table class="table table-striped mt-5 text-center">
+                        <thead class="thead-bg">
+                            <tr>
+                                <th scope="col">AD Title</th>
+                                <th scope="col">AD Amount</th>
+                                <th scope="col">AD Date</th>
+                                <th scope="col">AD Clicks</th>
+                                <th scope="col">AD Owner</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    SnapLink - Short URL
+                                </td>
+                                <td>
+                                    $10.99
+                                </td>
+                                <td>
+                                    21/07/2021
+                                </td>
+                                <td>
+                                    2819
+                                </td>
+                                <td>
+                                    Mounir El bertouli
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div id="main-ads">
+
+        </div>
+    </main>
+    <script type="text/javascript">
+        (async function(){
+            await fetch('http://localhost:4041/admin/api/v1/ads')
+                .then(res => res.json())
+                .then(data => {
+                   try{
+                    if(data.confirmation){
+                        const main_ads = document.getElementById('main-ads');
+                        data.ads_banners.map(ad => {
+                            const img = document.createElement('img');
+                            img.src = ad.banner;
+                            main_ads.append(img)
+                        })
+                    }else {
+                        alert('SOMETHING WENT WRONG!')
+                        console.log(data)
+                    }
+                   }catch(err){
+                       console.error(err)
+                   }
+                })
+        })();
+    </script>
+    <script type="text/javascript">
+        /*const send_ad_info = (FILE_BASE64) => {
+            const data = {};
+            // SERIALZE FORM
+            const unindexed_array = $('#ad-mngr-form').serializeArray();
+            // MAP THROUGH "UNINDEXED ARRAY"
+            $.map(unindexed_array, (n, i) => {
+                data[n.name] = n.value
+            });
+            data['ad-banner'] = FILE_BASE64;
+            console.log(data);
+            const BS_URL = 'http://localhost:4041';
+            await fetch(`${BS_URL}/admin/api/v1/ads/create`, {
+                method: 'POST',
+                headers: {
+                    "content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }).then(res => res.json()).then(data => {
+                
+            })
+        }; 
+        document.forms[0].addEventListener('click', send_ad_info);*/
+
+        const toBase64 = FILE => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(FILE);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            })
+        }
+        document.getElementById('ad-form-btn').addEventListener('click', async (e) => {
+            const fileInp = document.getElementById('ad-banner').files[0];
+            console.log(fileInp);
+            const data = {};
+            // SERIALZE FORM
+            const unindexed_array = $('#ad-mngr-form').serializeArray();
+            // MAP THROUGH "UNINDEXED ARRAY"
+            $.map(unindexed_array, (n, i) => {
+                data[n.name] = n.value
+            });
+            toBase64(fileInp).then(async BASE64 => {
+                console.log(BASE64);
+                data['ad-banner'] = BASE64;
+                console.log(data);
+                const BS_URL = 'http://localhost:4041';
+                await fetch(`${BS_URL}/admin/api/v1/ads/create`, {
+                    method: 'POST',
+                    headers: {
+                        "content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }).then(res => res.json()).then(data => {
+                    if(data.status = 201){
+                        alert('AD HAS BEEN CREATED 100%');
+                        console.log(data);
+                    } else {
+                        alert('SOMETHING WENT WRONG!')
+                        console.log(data);
+                    }
+                })
+            }).catch(err => {
+                console.error(err);
+            })
+        })
+    </script>
+    <!--CHART ANIMATION JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- jQuery JS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- SWEET ALERT JS (CDN) -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/JS/chart_data.js"></script>
+    <script src="/JS/APIs/create_ad_api.js"></script>
+<%- include('../partials/_footer.ejs') %>
+>>>>>>> 011794da44f6b209176256137330c45a67526cee

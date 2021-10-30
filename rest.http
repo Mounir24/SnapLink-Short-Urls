@@ -1,0 +1,4 @@
+GET http://localhost:3600/api/v1/articles
+
+Content-Type: application/json
+

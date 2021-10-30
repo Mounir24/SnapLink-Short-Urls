@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/svg/snapLink-logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- BOOTSTRAP 4 CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <!-- BOX ICONS CSS (CDN) -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- OWN CSS FILE -->
+    <link rel="stylesheet" href="CSS/style.css">
+    <title>SnapLink || Public Urls</title>
+</head>
+
+<body>
+    <!-- MENU & USER PROFILE -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top px-5">
+        <a class="navbar-brand" href="/">
+            <!--<i class='bx bxl-nodejs'></i>-->
+            <img src="/svg/link.png" alt="SnapLink Logo" class="img-fluid">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex justify-content-center align-items-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Social Media
+                    </a>
+                    <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="https://www.facebook.com/rida.momo.3367/" target="_blank"><i
+                                class='bx bxl-facebook'> </i> Facebook</a>
+                        <a class="dropdown-item" href="https://www.instagram.com/mounirbr24/" target="_blank"><i
+                                class='bx bxl-instagram'> </i> Instagram</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="https://www.youtube.com/channel/UCPxXadNk_tTpmqc8DAr3Mfw"
+                            target="_blank"><i class='bx bxl-youtube'> </i> YouTube channel</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/support">support</a>
+                </li>
+            </ul>
+        </div>
+        <!-- USER PROFILE -->
+        <!-- <div class="user__profile">
+            <img src="/svg/user.png" alt="User_Profile" class="img-fluid">
+        </div> -->
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown dropleft">
+                <a class=" nav-link dropdown-toggle dropleft" href="#" id="navbarDropdown" role="link"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="/svg/user.png" alt="User_Profile" class="img-fluid">
+                </a>
+                <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item d-flex justify-content-start align-items-center"><i class='bx bx-user'></i>user: <%=username %></a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/short-url"><i class='bx bx-link'></i>Short Url</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/profile"><i class='bx bx-cog'></i>Profile</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/logout"><i class='bx bx-log-out-circle'></i>Log out</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <!-- PRE-LOADING ANIMATION -->
+    <div class="pre-loader_wrapper" id="loader">
+        <img src="/svg/loader_ring.gif" alt="Loading..." class="img-fluid">
+    </div>
+    <!-- MAIN PAGE SECTION -->
+    <main class="l-main">
+        <div class="git">
+            <i class='bx bxl-git'></i>
+        </div>
+        <div class="nodejs">
+            <i class='bx bxl-nodejs'></i>
+        </div>
+        <div class="react">
+            <i class='bx bxl-react'></i>
+        </div>
+        <div class="container w-100">
+            <!--<div class="circle"></div>-->
+            <div class="row mx-auto">
+                <div class="col-md-10">
+                    <form id="url_form">
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle opt-btn" href="#" role="button"
+                                id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class='bx bxs-cog'></i>
+                            </a>
+
+                            <div class="dropdown-menu bg-none border-0 mt-4" aria-labelledby="dropdownMenuLink">
+                                <input type="text" name="slug" id="slug_input" placeholder="Ex: SnapLink (Optional)"
+                                    class="slug_input" aria-describedby="slugHelpBlock">
+                                <small id="slugHelpBlock" class="form-text text-muted">
+                                    Optional Field!
+                                </small>
+                                <!--<a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>-->
+                            </div>
+                        </div>
+                        <input type="text" name="url" placeholder="Past URL here" id="url_input" class="shortner-url"
+                            required>
+                        <!--<input type="text" name="slug" id="slug_input" placeholder="Ex: Jhon Doe (Optional)"
+                            class="slug_input">-->
+                        <button type="submit" id="form_btn" class="short_btn">Short Url</button>
+                    </form>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn filter_btn mx-auto mb-5" type="button" data-toggle="modal" data-target="#filter"
+                        aria-expanded="false" aria-controls="filter">
+                        Filter
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mx-auto  w-100">
+                <!-- Modal -->
+                <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Filter Section:</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <i class='bx bx-x'></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="mx-auto w-100" id="filter">
+                                        <form class="form-inline" id="filter-area">
+                                            <div class="form-group col-md-6 mx-auto">
+                                                <label for="page">Select Page:</label>
+                                                <select class="custom-select" name="page" id="page">
+                                                    <% for(let i=1; i < pages; i++) { %>
+                                                        <option value="<%= i %>">
+                                                            <%= i %>
+                                                        </option>
+                                                        <% } %>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6 mx-auto">
+                                                <label for="limit">Select Limit:</label>
+                                                <select class="custom-select" name="limit" id="limit">
+                                                    <!--<option selected>Limit</option>-->
+                                                    <option value="5">5</option>
+                                                    <option value="10">10</option>
+                                                    <option value="15">15</option>
+                                                    <option value="20">20</option>
+                                                </select>
+                                            </div>
+                                            <!--Button Apply -->
+                                            <button class="btn apply_btn mt-3" id="apply__btn">
+                                                Apply
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-6 text-center">
+                    <div class="bx-content">
+                        <div class="bx-icon">
+                            <i class='bx bx-link'></i>
+                        </div>
+                        <div class="bx-dash">
+                            <h3>Total Urls</h3>
+                            <span class="urls-count counter">
+                                <%= totalUrls %>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <div class="bx-content">
+                        <div class="bx-icon">
+                            <i class='bx bxs-navigation'></i>
+                        </div>
+                        <div class="bx-dash">
+                            <h3>Total Clicks</h3>
+                            <span class="urls-count counter">
+                                <%= totalClicks %>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped mt-5 ">
+                <thead class="thead-bg ">
+                    <tr>
+                        <th scope="col">Original Url</th>
+                        <th scope="col ">Short Url</th>
+                        <th scope="col ">Clicks</th>
+                        <th scope="col " style="text-align: center;">share</th>
+                        <th scope="col">QR code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% urls.forEach(item=> { %>
+                        <tr>
+                            <td>
+                                <div class="url">
+                                    <%= item.original_url %>
+                                </div>
+                                <span class="date">
+                                    <%= item.date %>
+                                </span>
+                                <% if(item.original_url.startsWith('https')) { %>
+                                    <span class="verified_url"><i class='bx bxs-check-shield' data-toggle="tooltip"
+                                            data-placement="right" title="Secure URL"></i></span>
+                                    <% } else{ %>
+                                        <span class="insecure_url"><i class='bx bxs-check-shield' data-toggle="tooltip"
+                                                data-placement="right" title="Insecure URL"></i></span>
+                                        <%} %>
+                                            <span class="user-id">
+                                                <img src="/svg/user.png" class="mr-2" width="20" height="20"
+                                                    alt="<%= item.createdBy %>" data-toggle="tooltip"
+                                                    data-placement="top" title="<%= item.createdBy %>">
+                                                <%= item.createdBy %>
+                                            </span>
+                            </td>
+                            <td class="text-center mx-auto">
+                                <!--<a href="<%= originUrl+'api/shorturl/'+ item.short_url %>" target="_blank">
+                                        <%= item.short_url %>
+                                    </a>-->
+                                <input type="text" class="ipt-trgt" readonly="true"
+                                    value="<%= originUrl + item.short_url %>">
+
+                                <i class='bx bx-copy cpy-btn' title="copy"></i>
+
+                            </td>
+                            <td id="clicks" style="text-align: center;">
+                                <%= item.clicks %>
+                            </td>
+                            <td>
+                                <div class="sci-share">
+                                    <button class="share-btn" data-sharer="twitter" data-title="SnapLink Short URL"
+                                        data-hashtags="SnapLink, MBN agency"
+                                        data-url="<%= originUrl + item.short_url %>">
+                                        <i class='bx bxl-twitter' width="25" height="25"></i>
+                                    </button>
+                                    <button class="share-btn" data-sharer="reddit" data-title="SnapLink Short URL"
+                                        data-hashtags="SnapLink, MBN agency"
+                                        data-url="<%= originUrl + item.short_url %>">
+                                        <i class='bx bxl-reddit' width="25" height="25"></i>
+                                    </button>
+                                    <button class="share-btn" data-sharer="linkedin" data-title="SnapLink Short URL"
+                                        data-hashtags="SnapLink, MBN agency"
+                                        data-url="<%= originUrl + item.short_url %>">
+                                        <i class='bx bxl-linkedin' width="25" height="25"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="<%=item.qrcode%>" download='<%= item.short_url %>' title="Download QR Code">
+                                    <img src="<%=item.qrcode%>" alt="qrcode-client" class="img-fluid"
+                                        style="width: 50px; height:50px;">
+                                </a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <!--<div class="circle-shape"></div>-->
+            <!--<div class="row">
+                    <div class="col-md-12 text-center mt-4">
+                        <p class="copy-right">Made by <span class="owner">Mounir el bertouli</span> <i
+                                class='bx bxs-heart'></i></p>
+                    </div>
+                </div>-->
+        </div>
+    </main>
+    <!-- SHARER.JS JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+    <!-- SWEET ALERT JS (CDN) -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <%- include('partials/_footer.ejs') %>

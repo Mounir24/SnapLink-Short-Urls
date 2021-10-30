@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="/svg/snapLink-logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- BOOTSTRAP 4 CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <!-- BOX ICONS CSS (CDN) -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- MESSAGES SENDER API (CDN) -->
+    <!--<script src="https://res.cloudinary.com/snaplink/raw/upload/v1628019327/message.api_fmdhwz.js"></script>-->
+    <!-- OWN CSS FILE -->
+    <link rel="stylesheet" href="CSS/style.css">
+    <title>SnapLink || Admin Pannel</title>
+</head>
+
+<body>
+    <!-- START NAVBAR SECTION -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top px-5">
+        <a class="navbar-brand" href="/">
+            <!--<i class='bx bxl-nodejs'></i>-->
+            <img src="/svg/snapLink-logo.svg" alt="SnapLink Logo" class="img-fluid">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex justify-content-center align-items-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Social Media
+                    </a>
+                    <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="https://www.facebook.com/rida.momo.3367/" target="_blank"><i
+                                class='bx bxl-facebook'> </i> Facebook</a>
+                        <a class="dropdown-item" href="https://www.instagram.com/mounirbr24/" target="_blank"><i
+                                class='bx bxl-instagram'> </i> Instagram</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="https://www.youtube.com/channel/UCPxXadNk_tTpmqc8DAr3Mfw"
+                            target="_blank"><i class='bx bxl-youtube'> </i> YouTube channel</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/support">support</a>
+                </li>
+            </ul>
+        </div>
+        <!-- USER PROFILE -->
+        <!-- <div class="user__profile">
+            <img src="/svg/user.png" alt="User_Profile" class="img-fluid">
+        </div> -->
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown dropleft">
+                <a class=" nav-link dropdown-toggle dropleft" href="#" id="navbarDropdown" role="link"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="/svg/user.png" alt="User_Profile" class="img-fluid">
+                </a>
+                <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item d-flex justify-content-start align-items-center"><i class='bx bx-user admin-bx-user'></i>Admin: <%= adminName %></a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/admin-panel"><i class='bx bxs-dashboard'></i>Dashboard</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/urls-list"><i class='bx bx-link'></i>Urls List</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/blogs"><i class='bx bxl-blogger'></i>Blogs</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/admin/logger/download"><i class='bx bx-file'></i>Download Logger</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/sign-out"><i class='bx bx-log-out-circle'></i>Log out</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <!-- PRE-LOADING ANIMATION -->
+    <div class="pre-loader_wrapper" id="loader">
+        <img src="/svg/loader_ring.gif" alt="Loading..." class="img-fluid">
+    </div>
+    <!-- START MAIN SECTION -->
+    <div class="container statics_pannel">
+        <!-- STATISTICS PANNEL AREA -->
+        <div class="row w-100 mx-auto">
+            <div class="col-md-4 text-center">
+                <div class="pannel_box" data-tilt>
+                    <div class="pannel__content">
+                        <!-- PANNEL LABEL -->
+                        <span class="pannel_label">Total Users:</span>
+                        <span class="pannel_number">
+                            <% if(totalUsers) { %>
+                                <%= totalUsers.length %>
+                                    <% } else { %>
+                                        +0
+                                        <% } %>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="pannel_box" data-tilt>
+                    <div class="pannel__content">
+                        <!-- PANNEL LABEL -->
+                        <span class="pannel_label">Total Links:</span>
+                        <span class="pannel_number">
+                            <%= totalUrls %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="pannel_box" data-tilt>
+                    <div class="pannel__content">
+                        <!-- PANNEL LABEL -->
+                        <span class="pannel_label">Total Clicks</span>
+                        <span class="pannel_number">
+                            <%= totalClicks %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CHART GRAPHICING DATA -->
+    <div class="container">
+        <div class="row w-100 mx-auto">
+            <div class="col-md-6  text-center mx-auto">
+                <canvas id="myChart" width="100%" height="100%"></canvas>
+            </div>
+            <div class="col-md-6  text-center mx-auto tb-scroll">
+                <!--<canvas id="url-sources" width="100%" height="100%"></canvas>-->
+                <!--<ul id="sources-list">
+                </ul>-->
+                <table class="table table-striped">
+                    <thead class="thead-bg">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Source</th>
+                            <th scope="col">Source Tag</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sources-body">
+
+                    </tbody>
+                </table>
+            </div>
+            <!--<div class="col-md-2"></div>
+            <div class="col-md-5 text-center">
+                <canvas id="doughnut" width="400" height="400"></canvas>
+            </div>-->
+        </div>
+    </div>
+    <div class="container-fluid mb-5">
+        <div class="row mx-auto w-80">
+            <div class="col-md-12">
+                <!-- TABALE AREA -->
+                <table class="table table-striped mt-5 text-center ">
+                    <thead class="thead-bg ">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">E-mail</th>
+                            <th scope="col">IP Address</th>
+                            <th scope="col">country</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% totalUsers.map((user , index)=> { %>
+                            <tr>
+                                <td>
+                                    <%= index +1 %>
+                                </td>
+                                <td>
+                                    <span class="user__name">
+                                        <img src="/svg/user.png" class="mr-2" width="30" height="30"
+                                            alt="<%= user.username.substr(0,1) %>" data-toggle="tooltip"
+                                            data-placement="top" title="<%= user.username %>">
+                                        <%= user.username %>
+                                    </span>
+                                </td>
+                                <td class="text-center mx-auto">
+                                    <%= user.email %>
+                                        <span class="verified_url"><i class='bx bxs-check-shield' data-toggle="tooltip"
+                                                data-placement="right" title="E-mail Verified"></i>
+                                        </span>
+                                </td>
+                                <td style="text-align: center;">
+                                    <!--<span class="badge badge-success">Active</span>-->
+                                    <div class="usr-p">
+                                        <%= user.geo[0].ip %>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="country d-flex justify-content-center align-items-center">
+                                        <%= user.geo[0].country %>
+                                            <span class="flag">
+                                                <img src="<%= user.geo[0].country_flag %>"
+                                                    alt="<%= user.geo[0].country %>" class="img-fluid"
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="<%= user.geo[0].country %>">
+                                            </span>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <% if(user.isBlocked) { %>
+                                        <p class="text-danger">
+                                            Blocked
+                                        </p>
+                                        <%} else { %>
+                                            <p class="text-success">
+                                                Active
+                                            </p>
+                                            <% } %>
+                                </td>
+                                <td>
+                                    <button data-id="<%= user._id %>" class="btn remove-btn" data-toggle="tooltip"
+                                        data-placement="top" title="Remove">
+                                        <i class='bx bxs-trash'></i>
+                                    </button>
+                                    <% if(user.isBlocked) { %>
+                                        <button data-id="<%= user._id %>" class="btn unblock-btn" data-toggle="tooltip"
+                                            data-placement="top" title="Unblock">
+                                            <i class='bx bxs-lock-open'></i>
+                                        </button>
+                                        <%} else { %>
+                                            <button data-id="<%= user._id %>" class="btn block-btn"
+                                                data-toggle="tooltip" data-placement="top" title="Block">
+                                                <i class='bx bx-block'></i>
+                                            </button>
+                                            <% } %>
+                                                <button class="btn" data-toggle="modal"
+                                                    data-target="#<%= user.username %>">
+                                                    <i class='bx bx-send' data-toggle="tooltip" data-placement="top"
+                                                        title="Send E-mail"></i>
+                                                </button>
+                                                <!-- E-MAIL MODAL FORM -->
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="<%= user.username %>" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Send
+                                                                    E-mail</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <i class='bx bx-x'></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form id="email_form" class="email_form">
+                                                                    <div class="form-row">
+                                                                        <!-- E-mail Col 1 -->
+                                                                        <div class="form-group col-md-6">
+                                                                            <label for="user-email">Email:</label>
+                                                                            <input type="email" class="form-control"
+                                                                                id="user-email" name="userEmail"
+                                                                                value="<%= user.email %>"
+                                                                                placeholder="User E-mail">
+                                                                        </div>
+                                                                        <!-- Username Col 2 -->
+                                                                        <div class="form-group col-md-6">
+                                                                            <label for="user-username">username:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="username"
+                                                                                value="<%= user.username %>"
+                                                                                id="user-username"
+                                                                                placeholder="User Username">
+                                                                        </div>
+                                                                        <div class="form-row">
+                                                                            <!-- Message Area Col 1 -->
+                                                                            <div class="form-group col-md-12">
+                                                                                <label
+                                                                                    for="user-message">Message:</label>
+                                                                                <textarea name="userMessage"
+                                                                                    class="form-control"
+                                                                                    id="user-message" cols="30" rows="5"
+                                                                                    placeholder="Enter A Message"></textarea>
+                                                                                <div class="invalid-feedback">
+                                                                                    Please enter a message in the
+                                                                                    textarea.
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group col-md-12">
+                                                                                <label for="email-type">E-mail
+                                                                                    Type:</label>
+                                                                                <select class="custom-select"
+                                                                                    id="email-type" name="emailType"
+                                                                                    required>
+                                                                                    <option value="choose one">
+                                                                                        Choose...</option>
+                                                                                    <option value="Account Risk">Account
+                                                                                        Risk
+                                                                                    </option>
+                                                                                    <option value="Data Leak">Data Leak
+                                                                                    </option>
+                                                                                    <option value="Access Controll">
+                                                                                        Access Controll
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="submit" class="btn email-form-btn"
+                                                                        id="email-btn">Send</button>
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn email-close-btn"
+                                                                    data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                </td>
+                                <% }) %>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <footer class="container-fluid bg-light d-flex justify-content-center align-items-center">
+        <div class="row mx-auto w-75">
+            <div class="col-md-3 mx-auto">
+                <div class="logo">
+                    <img src="/svg/snapLink-logo.svg" alt="SnapLink" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-7 my-auto">
+                <ul class="my-auto d-flex justify-content-between align-items-center">
+                    <li class="list-item">
+                        <a href="/" class="item-link">Home</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="/support" class="item-link">support</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="/about" class="item-link">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <!-- BOOTSTRAP 4 JS (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- TILT ANIMATION JS (CDN)-->
+    <script src="https://unpkg.com/tilt.js@1.2.1/dest/tilt.jquery.min.js"></script>
+    <!--CHART ANIMATION JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- SWEET ALERT JS (CDN) -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/JS/chart_data.js"></script>
+    <script src="/JS/APIs/message.api.js"></script>
+    <script src="/JS/main.js"></script>
+</body>
+
+</html>

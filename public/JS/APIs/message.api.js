@@ -1,0 +1,8 @@
+const POST_DATA = async (url = '', data = {}, method = '') => { const response = await fetch(url, { method: method, headers: { "Content-Type": "Application/json" }, body: JSON.stringify(data) }); return response.json() }
+const BASE_URL3 = 'http://localhost:4041'; const emailBtn = document.getElementById('email-btn'); const emailForm = document.getElementById('email_form'); const email_forms = document.getElementsByClassName('email_form'); const forms_arr = [...email_forms]; forms_arr.forEach(form => {
+    form.addEventListener('submit', async (e) => {
+        const formBtn = form.lastElementChild; e.preventDefault(); formBtn.style.opacity = 0.4; formBtn.innerText = 'Sending...'; const unindexed_arr = $(form).serializeArray(); const data = {}; $.map(unindexed_arr, (n, i) => { data[n.name] = n.value }); if (!data || data === null || data === undefined) { alert('No data mapped to the DATA object!'); return }
+        console.log(data)
+        await fetch(`${BASE_URL3}/admin/api/v1/send-message`, { method: 'POST', headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).then(response => response.json()).then(data => { formBtn.style.opacity = 1; formBtn.innerText = 'Send'; if (data.status === 200) { swal({ title: "E-mail sent !!", text: `You Sent E-mail to: ${data.userEmail}!`, icon: "success", button: "Got it!" }); form.reset() } else if (data.status === 403) { swal({ title: "Permission Denied!!", text: data.msg, icon: "danger", button: "Got it!", }) } else { swal({ title: "Ooops!", text: `Something Went Wrong!!`, icon: "danger", button: "Got it!", }) } })
+    })
+})

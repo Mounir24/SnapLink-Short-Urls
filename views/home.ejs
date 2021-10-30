@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="/svg/snapLink-logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Slick Carousel CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" />
+    <!-- Own CSS File -->
+    <link rel="stylesheet" href="CSS/style.css">
+    <title>SnapLink || Home</title>
+</head>
+
+<body>
+    <%- include('partials/_header.ejs') %>
+        <!-- PRE-LOADING ANIMATION -->
+        <div class="pre-loader_wrapper" id="loader">
+            <img src="/svg/loader_ring.gif" alt="Loading..." class="img-fluid">
+        </div>
+        <main class="l-home">
+            <div class="container-fluid hero__section">
+                <div class="row mx-auto text-center mt-4">
+                    <div class="col-md-12">
+                        <div class="hero__content">
+                            <h1 class="H_S">Welcome to SnapLink || Free Short URL Tool</h1>
+                            <p class="H_S">Turn any long URL shorter with SnapLink Trick</p>
+                            <div class="hero__buttons">
+                                <button class="btn short-btn" data-tilt>
+                                    <a href="/short-url">SHORT URL</a>
+                                </button>
+                                <button class="btn signup-btn" data-tilt="">
+                                    <a href="/sign-up">SIGN UP</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="hsl(224, 76%, 59%)" fill-opacity="1"
+                    d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,122.7C672,96,768,64,864,80C960,96,1056,160,1152,160C1248,160,1344,96,1392,64L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+                </path>
+            </svg>
+        </main>
+        <!-- START STATICS SECTION -->
+        <div class="container-fluid statics-section">
+            <div class="row w-75 mx-auto">
+                <div class="col-md-4 text-center">
+                    <div class="bx-content bx_1">
+                        <div class="bx-icon">
+                            <i class='bx bx-link'></i>
+                        </div>
+                        <div class="bx-dash">
+                            <h3>Total Urls</h3>
+                            <span class="urls-count counter">
+                                <%= totalUrls %>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="bx-content bx_2">
+                        <div class="bx-icon">
+                            <i class='bx bxs-navigation'></i>
+                        </div>
+                        <div class="bx-dash">
+                            <h3>Total Clicks</h3>
+                            <span class="urls-count counter">
+                                <%= totalClicks %>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="bx-content bx_3">
+                        <div class="bx-icon">
+                            <i class='bx bx-user text-white'></i>
+                        </div>
+                        <div class="bx-dash">
+                            <h3>Total Users</h3>
+                            <span class="urls-count counter">
+                                <%= totalUsers %>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END STATICS SECTION -->
+        <!-- START ABOUT SECTION -->
+        <div class="container about__section">
+            <span class="section_title mb-5">
+                <h1>About us</h1>
+            </span>
+            <!-- Row 1 -->
+            <div class="row mx-auto mt-5">
+                <div class="col-md-5 Abt_left">
+                    <div class="img-holder">
+                        <img src="/svg/undraw_welcome_cats_thqn.svg" alt="Greetings" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-5 text-center Abt_right">
+                    <div class="about_content">
+                        <h1>Welcome to SnapLink</h1>
+                        <p>Turn any long URL shorter with SnapLink trick</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Row 2 -->
+            <div class="row mx-auto mt-5">
+                <div class="col-md-5 text-center d-flex Abt_left">
+                    <div class="about_content align-self-center">
+                        <h1>SnapLink tool features</h1>
+                        <p>Easly Share - Simple URL - Secure Paltform</p>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-5 Abt_right">
+                    <div class="img-holder">
+                        <img src="/svg/undraw_Traveling_re_weve.svg" alt="Awesome" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <!-- Row 3 -->
+            <div class="row mx-auto mt-5">
+                <div class="col-md-5 Abt_left">
+                    <div class="img-holder">
+                        <img src="/svg/undraw_Social_ideas_re_j5v4.svg" alt="Social Media Sharing" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-5 text-center d-flex Abt_right">
+                    <div class="about_content align-self-center">
+                        <h1>Share Our Tool with Friends</h1>
+                        <p>If you like SnapLink's service , please share it with your friends!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END ABOUT SECTION -->
+        <!-- START FEATURES SECTION -->
+        <div class="container features_section mt-5">
+            <span class="section_title mb-5">
+                <h1>Features</h1>
+            </span>
+            <div class="row mt-5">
+                <div class="col-md-3 text-center Ft_1">
+                    <div class="feature_content">
+                        <div class="feature_icon mb-3">
+                            <img src="/svg/connection.png" alt="Share Links" width="50" height="50">
+                        </div>
+                        <p class="my-auto">Easly Share</p>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="feature_content Ft_2">
+                        <div class="feature_icon mb-3">
+                            <img src="/svg/link.png" alt="Easy Link" width="50" height="50">
+                        </div>
+                        <p class="my-auto">Simple URL</p>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="feature_content Ft_3">
+                        <div class="feature_icon mb-3">
+                            <img src="/svg/secure.png" alt="Secure Plateform" width="50" height="50">
+                        </div>
+                        <p class="my-auto">Secure Plateform</p>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="feature_content Ft_4">
+                        <div class="feature_icon mb-3">
+                            <img src="/svg/qr-code.png" alt="QR code" width="50" height="50">
+                        </div>
+                        <p class="my-auto">Link as Qr code</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container d-flex justify-content-center align-items-center">
+                <div class="snp-banner mx-auto">
+                    <script src="https://cdn.onlymega.com/cktm6svv5000ah53x5aiqfupi/embed.js?bnTag=" async></script>
+                </div>
+            </div>
+        </div>
+        <!-- END FEATURES SECTION -->
+        <!-- START BANNER SECTION  -->
+        <div class="container-fluid banner__section">
+            <div class="row my-auto text-center">
+                <div class="col-md-12">
+                    <div class="banner__content">
+                        <h2>Welcome to SnapLink plateform</h2>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi, porro!</p>
+                        <button class="btn short-btn" data-tilt="">
+                            <a href="/short-url" class="btn-link">Get Started</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- START USERS COUNTRIES -->
+        <div class="container countries__flags">
+            <span class="section_title">
+                <h1>Lastest Signups </h1>
+            </span>
+            <div class="row flags_slider mx-auto countries_flags">
+                <% users.map(user=> { %>
+                    <div class="col-md-4">
+                        <div class="fg_box">
+                            <div class="flag_wrapper">
+                                <img src="<%= user.geo[0].country_flag %>" alt="<%= user.geo[0].country %>" title="<%= user.geo[0].country %>" class="img-fluid">
+                            </div>
+                            <div class="user_name">
+                                <p>
+                                    <%= user.username %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <%})%>
+            </div>
+        </div>
+        <!-- END USERS COUNTRIES -->
+        <!-- START ARTICLES SECTION -->
+        <div class="container articles_wrapper">
+            <span class="section_title">
+                <h1>News & Updates</h1>
+            </span>
+            <% if(articles.length==0) { %>
+                <div class="no_blogs_found w-100 d-flex justify-content-center align-items-center">
+                    <span class="text-center mx-auto">
+                        <i class='bx bxs-error'></i>
+                        <p class="not_found_text">No Blogs Found!</p>
+                    </span>
+                </div>
+                <% } %>
+                    <!-- Mini Blog Articles Section -->
+                    <div class="row articles_slider mt-4" id="articles_row">
+                        <% articles.map(article=> { %>
+                            <div class="col-md-4">
+                                <div class="article__box">
+                                    <!-- Views Counter -->
+                                    <div class="views_counter d-flex align-items-center">
+                                        <i class='bx bxs-hot'></i>
+                                        <span class="counter ml-2">
+                                            <%= article.views %>
+                                        </span>
+                                    </div>
+                                    <!-- Article Image (Poster) -->
+                                    <div class="poster__wrapper">
+                                        <img src="data:image/<%= article.poster_url.contentType %>; base64,<%= article.poster_url.data.toString('base64') %>" alt="<%= article.title %>" class="img-fluid">
+                                    </div>
+                                    <div class="article__content">
+                                        <!-- Title -->
+                                        <div class="article__title">
+                                            <h3 class="art_title">
+                                                <%= article.title %>
+                                            </h3>
+                                        </div>
+                                        <!-- Description -->
+                                        <div class="article__desc">
+                                            <p class="art_desc">
+                                                <%= article.body %>
+                                            </p>
+                                        </div>
+                                        <!-- Controllers  -->
+                                        <div class="btns_controllers">
+                                            <button class="btn read-btn" data-id="<%= article._id %>"><i
+                                                    class='bx bxs-show'></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+        </div>
+        <div class="container d-flex justify-content-center align-items-center">
+            <div class="snp-banner mx-auto">
+                <script src="https://cdn.onlymega.com/cktm6legn000ah53xnwimne4r/embed.js?bnTag=" async></script> 
+            </div>
+        </div>
+        <script src="/JS/blog.api.js"></script>
+        <!-- END ARTICLES SECTION -->
+        <%- include('partials/_footer.ejs') %>
