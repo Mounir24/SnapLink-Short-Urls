@@ -32,7 +32,7 @@ const upload = multer({ storage: storage })
 //router.get('/', articlesCtrl.getArticles);
 
 // GET SINGLE ARTICLE CONTROLLER
-router.get('/blog', session_store, articlesCtrl.getSingleBlog);
+router.get('/blog', articlesCtrl.getSingleBlog);
 
 // CREATE NEW ARTICLE ROUTE
 router.post('/create', upload.single('poster'), articlesCtrl.createArticle)
