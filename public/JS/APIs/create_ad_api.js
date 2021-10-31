@@ -51,6 +51,12 @@ const BANNER_PREV_IMG = (event) => {
             SWEET_ALERTS('warning', 'Upload Failed!', `FILE: ${event.target.files[0].name} - SIZE: ${event.target.files[0].size}`);
             return
         }
+
+        // CHECK THE FILE MIME TYPE
+        const allowed_mime_types = ['image/png', 'image/svg', 'image/jpeg'];
+        if (!allowed_mime_types.includes(event.target.files[0].type)) {
+            return SWEET_ALERTS('warning', 'UPLOAD FAILED', `FILE: ${event.target.files[0].name} - TYPE: ${event.target.files[0].type} Not allowed!`);
+        }
         banner_prev.src = banner_src;
     }
 };
