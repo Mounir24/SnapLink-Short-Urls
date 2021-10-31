@@ -1897,6 +1897,12 @@ article.article_content {
   text-transform: uppercase;
 }
 
+/*---- START STYLING MAIN URL LIST SECTION ----*/
+.snplink_url_list_section {
+  min-height: 100vh;
+  width: 100%;
+}
+
 footer {
   max-height: 40vh;
   padding: 1rem;
