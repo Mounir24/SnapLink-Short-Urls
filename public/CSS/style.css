@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css2?family=Rajdhani&family=Russo+One&display=swap);
 @import url(https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap);
 @import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Teko:wght@600&display=swap");
 * {
   padding: 0;
   margin: 0;
@@ -689,11 +690,12 @@ tbody > tr a {
 }
 
 .hero__content > h1 {
-  font-family: "Russo One", sans-serif;
-  font-weight: 500;
+  font-family: "Teko", sans-serif;
+  font-weight: 600;
   font-size: 40px;
   color: #fff;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .hero__content > p {
