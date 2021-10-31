@@ -19,7 +19,72 @@
     <title>SnapLink || Ads Manager</title>
 </head>
 <body>
-        <%- include('../partials/_header.ejs') %>
+    <!-- START NAVBAR SECTION -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top px-5">
+        <a class="navbar-brand" href="/">
+            <!--<i class='bx bxl-nodejs'></i>-->
+            <img src="/svg/snapLink-logo.svg" alt="SnapLink Logo" class="img-fluid">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex justify-content-center align-items-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Social Media
+                    </a>
+                    <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="https://www.facebook.com/rida.momo.3367/" target="_blank"><i
+                                class='bx bxl-facebook'> </i> Facebook</a>
+                        <a class="dropdown-item" href="https://www.instagram.com/mounirbr24/" target="_blank"><i
+                                class='bx bxl-instagram'> </i> Instagram</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="https://www.youtube.com/channel/UCPxXadNk_tTpmqc8DAr3Mfw"
+                            target="_blank"><i class='bx bxl-youtube'> </i> YouTube channel</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/support">support</a>
+                </li>
+            </ul>
+        </div>
+        <!-- USER PROFILE -->
+        <!-- <div class="user__profile">
+                <img src="/svg/user.png" alt="User_Profile" class="img-fluid">
+            </div> -->
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown dropleft">
+                <a class=" nav-link dropdown-toggle dropleft" href="#" id="navbarDropdown" role="link"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="/svg/user.png" alt="User_Profile" class="img-fluid">
+                </a>
+                <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item d-flex justify-content-start align-items-center"><i
+                            class='bx bx-user'></i>Admin: FOUZIA31</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/admin-panel"><i
+                            class='bx bxs-dashboard'></i>Dashboard</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/urls-list"><i
+                            class='bx bx-link'></i>Urls List</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/blogs"><i
+                            class='bx bxl-blogger'></i>Blogs</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/admin/ads-manager"><i class='bx bxs-bar-chart-alt-2'></i>Compaigns</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center"
+                        href="/admin/logger/download"><i class='bx bx-file'></i>Download Logger</a>
+                    <a class="dropdown-item d-flex justify-content-start align-items-center" href="/sign-out"><i
+                            class='bx bx-log-out-circle'></i>Log out</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
     <main class="container-fluid mngr-dash-section">
         <div class="container">
             <!-- ROW ONE -->
