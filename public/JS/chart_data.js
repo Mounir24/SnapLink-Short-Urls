@@ -80,7 +80,7 @@
 
                     td1.innerHTML = index++;
                     td2.innerHTML = `<span class="url_source"><a href="${source}" target="_blank" style="text-decoration: none;">${source}</span>`;
-                    td3.innerHTML = `<span class="url_tag">${url_tag} <i class="bx bxl-${url_tag === 'snaplink' ? 'react' : url_tag}"></i></span>`;
+                    td3.innerHTML = `<span class="url_tag">${url_tag} <i class="bx bxl-${url_tag === 'snaplink' ? 'react' : url_tag === 'l.facebook' ? 'facebook' : url_tag}"></i></span>`;
                     row.append(td1);
                     row.append(td2);
                     row.append(td3);
@@ -89,6 +89,8 @@
 
             } else if (data.status === 400) {
                 alert(data.response);
+            } else {
+                return;
             }
         })
 })();
