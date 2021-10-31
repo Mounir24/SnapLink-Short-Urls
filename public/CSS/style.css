@@ -2042,7 +2042,7 @@ a {
 }
 
 .xl-hgt {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .tb-scroll {
