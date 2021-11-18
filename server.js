@@ -38,7 +38,7 @@ app.use(helmet.ieNoOpen());
 app.use(helmet.hsts({ maxAge: 24 * 60 * 60 })); // FORCE HTTPS ONLY 
 app.use(helmet.dnsPrefetchControl());
 app.use(helmet.noSniff())
-/*app.use(helmet.contentSecurityPolicy({
+app.use(helmet.contentSecurityPolicy({
     useDefaults: true,
     directives: {
         "default-src": ["*", "'unsafe-inline'"],
@@ -47,7 +47,7 @@ app.use(helmet.noSniff())
         "img-src": ["*", "data:", "blob:", "'unsafe-inline'"],
         upgradeInsecureRequests: []
     }
-}));*/ // IMPLEMENT CONTENT SECURITY POLICY (CSP)
+})); // IMPLEMENT CONTENT SECURITY POLICY (CSP)
 app.use(cors(corsOptions)); // EXECUTE THE CORS MODULE IN ALL ROUTES
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
