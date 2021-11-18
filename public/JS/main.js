@@ -311,7 +311,7 @@ $('#url_form').submit(e => {
 
 
 // START REDDERING COMPAIGNS 
-(async function () {
+/*(async function () {
     const API_ENDPOINT = "L2FwaS92MS9jbGllbnQvYWRz";
     await fetch(`${BASE_URL}${atob(API_ENDPOINT)}`).then(res => res.json())
         .then(data => {
@@ -367,7 +367,7 @@ $('#url_form').submit(e => {
                 })
             }
         })
-})();
+})();*/
 
 //const id_input = document.createElement('input'); id_input.type = "hidden"; id_input.name = "id"; id_input.value = data.id; const Verify_Token_Form = $('#verify_token_form'); Verify_Token_Form.insertAdjacentHTML('afterBegin', id_input);
 
