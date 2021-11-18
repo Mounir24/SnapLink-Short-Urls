@@ -4461,3 +4461,87 @@ a {
   height: 100%;
 }
 /*------ END STYLING SNPLINK BANNER ------*/
+
+/*----- START STYLING SNAPLINK COMPAIGNS SECTION -------*/
+.snaplink-compaign-section {
+  width: 100%;
+  height: auto;
+}
+
+.compaigns-container {
+  width: 70%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+.compaigns-container > .ad_poster_holder {
+  width: 100%;
+  height: 18vh;
+  position: relative;
+  margin-top: 2.5rem;
+  z-index: 1;
+}
+
+.ad_poster_holder > .ad-close-wrapper {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 22;
+}
+
+.ad-close-wrapper > .bxs-x-circle {
+  font-size: 27px;
+  color: hsl(0, 0%, 81%);
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.bxs-x-circle:hover {
+  transform: scale(1.2);
+}
+
+.ad_poster_holder > .snaplink-default-ad-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.snaplink-default-ad-banner > .snaplink-ad-banner-logo {
+  width: 70px;
+  height: 70px;
+}
+
+.snaplink-ad-banner-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.snaplink-default-ad-banner > a {
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 500;
+  font-size: 25px;
+  color: #d1d1d1;
+  text-align: center;
+  text-decoration: none;
+}
+
+.ad_poster_holder a {
+  text-decoration: none;
+  width: 100%;
+}
+
+.ad_poster_holder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*----- END STYLING SNAPLINK COMPAIGNS SECTION -------*/

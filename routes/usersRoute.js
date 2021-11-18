@@ -114,5 +114,8 @@ router.post('/api/verify/token_access', useControll.verifyTokenAccess);
 // CREATE A PLAN REQUEST ROUTE
 router.post('/api/v1/plan_request', useControll.planRequest);
 
+// CREATE A CLIENT (PUBLIC) API ROUTE ENDPOINT
+router.get('/api/v1/client/ads', useControll.publicAds);
+
 // EXPORT ROUTES MODULE
 module.exports = router;

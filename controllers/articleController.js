@@ -54,7 +54,7 @@ const Articles = require('../model/articleSchema'); // ARTICLES MODEL MODULE
 // }
 
 // CREATE ARTICLE CONTROLLER
-exports.createArticle = async(req, res, next) => {
+exports.createArticle = async (req, res, next) => {
     // CATCH ARTICLE VALUES 
     const { title, author, body, topic } = req.body;
     // CATCH THE  TOKEN 
@@ -62,16 +62,16 @@ exports.createArticle = async(req, res, next) => {
 
     // CHECK IF THE TOKEN EXIST OR OPPOSITE
     if (!token) {
-        return next(createError(404, 'Token Not Found!'));
-        //return res.status(400).json({ status: 400, error: 'Token Not Found!' })
+        //return next(createError(404, 'Token Not Found!'));
+        return res.status(403).json({ status: 403, error: 'Access Not Allowed - Token Not Included!' })
     }
 
     // VALIDATE THE TOKEN 
-    jwt.verify(token, process.env.AUTH_SECRET, async(err) => {
+    jwt.verify(token, process.env.AUTH_SECRET, { algorithms: ['SHA256', 'HS256'] }, async (err) => {
         //CHECK IF ERROR THROWN
         if (err) {
             return next(createError(400, 'Incorrect / Token Expires'))
-                //return res.status(400).json({ status: 400, error: 'Incorrect Token / Token Expires' })
+            //return res.status(400).json({ status: 400, error: 'Incorrect Token / Token Expires' })
         }
 
         // CREATE NEW ARTICLE
@@ -97,7 +97,7 @@ exports.createArticle = async(req, res, next) => {
                     //return res.status(400).json({ status: 400, error: 'Error Throws While Create New Article' })
                 }
                 console.log(`${process.env.BASE_URL}/blogs/blog?pid=${savedArticle._id}`)
-                    // EMAIL ALL USERS / SUBSCRIBERS WITH UPDATED BLOGS
+                // EMAIL ALL USERS / SUBSCRIBERS WITH UPDATED BLOGS
                 Subscribers.find((err, emails) => {
                     // CHECK IF ERRORS EXIST 
                     if (err) {
@@ -112,7 +112,7 @@ exports.createArticle = async(req, res, next) => {
 
                     console.log(subscribers.email);
                     let blog_body;
-                    (function(str, n) {
+                    (function (str, n) {
                         blog_body = str.length > n ? str.substr(0, n) + '***' : str;
                         return blog_body;
                     })(savedArticle.body, 50)
@@ -174,15 +174,16 @@ exports.createArticle = async(req, res, next) => {
 }
 
 // GET SINGLE ARTICLE CONTROLLER
-exports.getSingleBlog = async(req, res, next) => {
+exports.getSingleBlog = async (req, res, next) => {
     // CATCH THE BLOG ID PARAMS
     //const { pid } = req.params;
     const queryObj = req.query;
     console.log(queryObj)
-        // CHECK ARTICLE ID IF EXIST
+    // CHECK ARTICLE ID IF EXIST
     if (!queryObj.pid) {
         console.error('Article ID Not Provided!')
-        next(createError(400, 'Blog ID Not Provided'));
+        //next(createError(400, 'Blog ID Not Provided'));
+        res.status(400).json({ success: false, msgError: 'Blog ID not provided' })
         return;
         //return res.status(400).json({ status: 400, error: 'Blog ID Not Provided!' });
     }
@@ -190,8 +191,8 @@ exports.getSingleBlog = async(req, res, next) => {
     // CHECK IF BLOG ID VALID 
     if (!isMongoID(queryObj.pid)) {
         console.log(`Blog ID:  ${queryObj.pid} Not Valid`)
-            // return res.status(404).json({ status: 404, error: `Blog ID:  ${articleId} Not Valid` })
-            //next(createError(404, 'Blog ID Not Valid!'));
+        // return res.status(404).json({ status: 404, error: `Blog ID:  ${articleId} Not Valid` })
+        //next(createError(404, 'Blog ID Not Valid!'));
         res.status(404).render('404');
         return;
     }
@@ -202,7 +203,7 @@ exports.getSingleBlog = async(req, res, next) => {
             // CHECK IF ERROR EXIST
             if (err) {
                 return next(createError(404, 'Blog Not Found! '))
-                    //return res.status(400).json({ status: 400, error: 'Error: Something Went Wrong!!' })
+                //return res.status(400).json({ status: 400, error: 'Error: Something Went Wrong!!' })
             }
 
             if (!payload || payload === undefined || payload === null) {
@@ -226,12 +227,12 @@ exports.getSingleBlog = async(req, res, next) => {
         })
     } catch (err) {
         next(err)
-            //res.status(500).json({ status: 500, error: 'INTERNAL_SERVER_ERROR' })
+        //res.status(500).json({ status: 500, error: 'INTERNAL_SERVER_ERROR' })
     }
 }
 
 // DELETE ARTICLE CONTROLLER
-exports.removeBlog = async(req, res, next) => {
+exports.removeBlog = async (req, res, next) => {
     // CATCH TOKEN FROM REQUEST OBJECT
     const token = req.cookies['Token'];
     // GET BLOG ID AS QUERY PARAMATER
@@ -244,7 +245,7 @@ exports.removeBlog = async(req, res, next) => {
 
     try {
         // VERIFY THE PROVIDED TOKEN
-        jwt.verify(token, process.env.AUTH_SECRET, async(err, payload) => {
+        jwt.verify(token, process.env.AUTH_SECRET, async (err, payload) => {
             // CHEC IF ERRORS EXIST
             if (err) {
                 return next(createError(401), 'UnAuthenticated_401');

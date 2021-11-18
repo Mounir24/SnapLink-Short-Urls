@@ -11,7 +11,7 @@ const path = require('path');
 const mime = require('mime');
 const fs = require('fs');
 const shortid = require('shortid');
-const moment = require('moment')
+const moment = require('moment');
 
 
 // IMPORT HELPERS MODULES 
@@ -25,7 +25,7 @@ const ADMIN_TOKEN_AUTH = async (token, cb) => {
     }
 
     try {
-        await jwt.verify(token, process.env.AUTH_SECRET, (err, payload) => {
+        await jwt.verify(token, process.env.AUTH_SECRET, { algorithms: ['SHA256', 'HS256'] }, (err, payload) => {
             if (err) return cb(err, null);
             // DESTRUCTURE THE TOKEN PAYLOAD & VERIFY IF THE TOKEN HAD PREVILEGES FOR ADMIN
             if (payload.isAdmin && payload.isActive) {
@@ -52,7 +52,7 @@ exports.urlsSources = async (req, res, next) => {
 
     try {
         // Verify The Admin Token
-        await jwt.verify(token, process.env.AUTH_SECRET, async (err, payload) => {
+        await jwt.verify(token, process.env.AUTH_SECRET, { algorithms: ['SHA256', 'HS256'] }, async (err, payload) => {
             if (err) {
                 return next(createError(400, 'Incorrect Token / Token Expires!'))
             }
@@ -130,7 +130,7 @@ exports.sendMessage = async (req, res, next) => {
 
     try {
         // VERIFY THE TOKEN 
-        await jwt.verify(token, process.env.AUTH_SECRET, (err, payload) => {
+        await jwt.verify(token, process.env.AUTH_SECRET, { algorithms: ['SHA256', 'HS256'] }, (err, payload) => {
             if (err) return next(createError(400, 'Token Incorrect/Expire'));
 
             const IS_ADMIN_TOKEN = () => {
@@ -216,7 +216,7 @@ exports.downloadFile = async (req, res, next) => {
     }
     // VERIFY THE TOKEN
     try {
-        await jwt.verify(Token, process.env.AUTH_SECRET, async (err, payload) => {
+        await jwt.verify(Token, process.env.AUTH_SECRET, { algorithms: ['SHA256', 'HS256'] }, async (err, payload) => {
             if (err) return next(err);
             // CHECK IF THE PAYLOAD EMPTY
             if (!payload || payload === null || payload === undefined) {
@@ -303,7 +303,7 @@ exports.allAds = async (req, res, next) => {
             if (err) return res.status(400).json({ status: 400, msgError: err.message });
             // DESTRUCTOR PAYLOAD OBJECT
             const { _id, username } = payload;
-            console.log(`USERNAME: ${username} - ID: ${_id}`);
+            //console.log(`USERNAME: ${username} - ID: ${_id}`);
 
             // ACCESS - GET ALL THE ADS BANNER --> DB 
             // FILTER ADS BASED ON THE BUDGET (PERIORITY)

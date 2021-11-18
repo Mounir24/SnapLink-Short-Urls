@@ -16,7 +16,25 @@ const services = require('../services/staticsRoutes');
 // INITIALE THE MULTER DISK STORAGE
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads')
+        const FILE_MIME_TYPE = {
+            "image/png": "png",
+            "image/jpeg": "jpeg",
+            "image/jpg": "jpg"
+        };
+
+        // CHECK / VALID THE FILE MIME TYPE
+        const FILE_TYPE = file.mimetype;
+        console.log(FILE_TYPE)
+        const isValid = FILE_MIME_TYPE[FILE_TYPE] ? true : false;
+
+        // CUSTOM UPLOAD ERROR
+        let uploadError = new Error('Failed: File Mime Type Not Allowed :(');
+
+        if (isValid) {
+            uploadError = null;
+        }
+
+        cb(uploadError, 'uploads')
     },
     filename: (req, file, cb) => {
         cb(null, file.fieldname + '-' + Date.now())

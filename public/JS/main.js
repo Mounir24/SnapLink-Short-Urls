@@ -8,7 +8,7 @@ const POST_DATA2 = async (url = '', data, method = '') => {
     return response.json()
 }
 const CUSTOM_ALERTS = (TP, title = '', txt) => { if (TP === 'success') { swal({ title: title, text: txt, icon: TP, button: "GOT IT" }); return } else if (TP === 'warning') { swal({ title: title, text: txt, icon: TP, button: "GOT IT", }) } else if (TP === 'DangerMode') { swal({ title: 'Are You Sure ?', text: "Are Sure wanna Unblock This User ? ", icon: "warning", buttons: !0, dangerMode: !0, }).then((willDelete) => { if (willDelete) { swal(txt, { icon: "success", }); return } }) } else { return null } }
-const BASE_URL = 'https://short-url-snaplink.herokuapp.com';
+const BASE_URL = 'http://localhost:4041';
 const alertWarning = document.getElementById('alert_warn')
 const alertDanger = document.getElementById('alert_danger');
 const validator = { isEmpty(str) { if (str.trim() === '') { return !0 } else { return !1 } }, isEmail(email) { const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; if (email.match(emailPattern)) { return !0 } else { return !1 } }, isLength(str, lng) { if (str.length < lng) { return !0 } else { return !1 } } }
@@ -307,7 +307,67 @@ $('#url_form').submit(e => {
             } else { return null }
         }
     })
-})
+});
+
+
+// START REDDERING COMPAIGNS 
+(async function () {
+    const API_ENDPOINT = "L2FwaS92MS9jbGllbnQvYWRz";
+    await fetch(`${BASE_URL}${atob(API_ENDPOINT)}`).then(res => res.json())
+        .then(data => {
+            if (data.status == 200) {
+                const compaigns_container = document.getElementById('compaigns-container');
+                if (!data.compaigns.length > 0) {
+                    // DISPLAY A DEFAULT BANNER OF SNAPLINK
+                    compaigns_container.append('Free Compaign Available')
+                    return;
+                }
+                data.compaigns.map(cn => {
+
+                    // CREATE NEW DOM ELEMENTS
+                    const compaign_div = document.createElement('div');
+                    const ad_close = document.createElement('div');
+                    const snp_default_ad = document.createElement('div');
+                    const snp_ad_logo = document.createElement('div');
+                    const snp_logo_img = document.createElement('img');
+                    const snp_ad_link = document.createElement('a');
+                    const snp_close_icon = document.createElement('i');
+                    const ad_url = document.createElement('a');
+                    const ad_poster = document.createElement('img');
+
+                    compaign_div.setAttribute('class', 'ad_poster_holder');
+                    compaign_div.setAttribute('title', cn.title);
+                    ad_url.setAttribute('href', cn.url);
+                    ad_url.setAttribute('target', '_blank');
+                    ad_poster.setAttribute('src', cn.banner);
+                    ad_poster.setAttribute('alt', cn.title);
+                    ad_poster.setAttribute('class', 'img-fluid');
+                    // APPEND DOM ELEMENTS FOR DEFAULT AD BANNER
+                    snp_close_icon.setAttribute('class', 'bx bxs-x-circle');
+                    ad_close.setAttribute('class', 'ad-close-wrapper');
+                    ad_close.appendChild(snp_close_icon);
+                    snp_default_ad.setAttribute('class', 'snaplink-default-ad-banner bg-light');
+                    snp_ad_logo.setAttribute('class', 'snaplink-ad-banner-logo');
+                    snp_logo_img.setAttribute('src', '/svg/snapLink-logo.svg');
+                    snp_logo_img.setAttribute('class', 'img-fluid');
+                    snp_ad_link.setAttribute('href', '/advertising');
+
+                    // ADDING NEW DOM ELEMENTS TO DEFAULT AD BANNER
+                    snp_ad_link.append('SnapLink Free Ad Space');
+                    snp_ad_logo.appendChild(snp_logo_img);
+                    snp_default_ad.appendChild(snp_ad_logo);
+                    snp_default_ad.appendChild(snp_ad_link);
+
+                    // APPEND THE ELEMENT TO ROOT DOM ELEMENT (compaign-container)
+                    ad_url.appendChild(ad_poster);
+                    compaign_div.appendChild(ad_url);
+                    compaign_div.appendChild(ad_close);
+                    compaign_div.appendChild(snp_default_ad);
+                    compaigns_container.append(compaign_div);
+                })
+            }
+        })
+})();
 
 //const id_input = document.createElement('input'); id_input.type = "hidden"; id_input.name = "id"; id_input.value = data.id; const Verify_Token_Form = $('#verify_token_form'); Verify_Token_Form.insertAdjacentHTML('afterBegin', id_input);
 

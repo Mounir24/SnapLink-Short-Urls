@@ -178,7 +178,7 @@ exports.activateUser = async (req, res, next) => {
     }
     try {
         // Verify Token
-        jwt.verify(token, process.env.AUTH_SECRET, (err, payload) => {
+        jwt.verify(token, process.env.AUTH_SECRET, { algorithms: ['SHA256', 'HS256'] }, (err, payload) => {
             if (err) {
                 return next(createError(400, 'Incorrect Token / Token Invalid!'));
             }
@@ -427,7 +427,7 @@ exports.createUrl = async (req, res, next) => {
     let USER;
 
     // VERIFY THE TOKEN
-    jwt.verify(token, process.env.REFRESH_TOKEN, (err, payload) => {
+    jwt.verify(token, process.env.REFRESH_TOKEN, { algorithms: ['SHA256', 'HS256'] }, (err, payload) => {
         // CHECK ERRORS
         if (err) {
             return next(createError(400, 'Incorrect Token ! Login / Sign up'));
@@ -852,7 +852,7 @@ exports.userProfile = async (req, res) => {
 
     try {
         // VERIFY TOKEN 
-        jwt.verify(token, process.env.REFRESH_TOKEN, async (err, payload) => {
+        jwt.verify(token, process.env.REFRESH_TOKEN, { algorithms: ['SHA256', 'HS256'] }, async (err, payload) => {
             //CHECK IF ERROR EXIST
             if (err) {
                 console.error(err.message);
@@ -1001,7 +1001,7 @@ exports.unblockUser = async (req, res, next) => {
 
     try {
         // VERIFY / DECRYPT THE TOKEN 
-        jwt.verify(token, process.env.AUTH_SECRET, async (err, payload) => {
+        jwt.verify(token, process.env.AUTH_SECRET, { algorithms: ['SHA256', 'HS256'] }, async (err, payload) => {
             // CHECK IF THE ERROR THROWN 
             if (err) {
                 return next(createError(401, 'Token Incorrect / Expiress, Try again!'));
@@ -1161,7 +1161,7 @@ exports.resetPass = async (req, res) => {
 
     try {
         // VERIFY & DECODE TOKEN
-        jwt.verify(token, process.env.AUTH_SECRET, async (err, payload) => {
+        jwt.verify(token, process.env.AUTH_SECRET, { algorithms: ['SHA256', 'HS256'] }, async (err, payload) => {
             // CHECK IF ERROR EXIST
             if (err) {
                 return res.status(400).json({ status: 400, msg: 'Invalid Token / Expires!' })
@@ -1445,7 +1445,7 @@ exports.urlsList = async (req, res) => {
     // INITIATE VARIBALE
     let user;
     // VALIDATE TOKEN
-    jwt.verify(token, process.env.AUTH_SECRET, (err, payload) => {
+    jwt.verify(token, process.env.AUTH_SECRET, { algorithms: ['SHA256', 'HS256'] }, (err, payload) => {
         // CHECK ERRORS 
         if (err) {
             return res.status(400).json({ status: 400, msg: 'Invalid Token / Expires' })
@@ -1489,7 +1489,7 @@ exports.flyData = async (req, res) => {
 
     // NOTE: IMPROVE THE PERFOMANCE OF THIS BLOCK LATER !!
     // VALIDATE TOKEN
-    await jwt.verify(Token, process.env.AUTH_SECRET, async (err, payload) => {
+    await jwt.verify(Token, process.env.AUTH_SECRET, { algorithms: ['SHA256', 'HS256'] }, async (err, payload) => {
         // CHECK ERROR
         if (err) {
             console.error(err.message);
@@ -1807,6 +1807,60 @@ exports.planRequest = async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ status: 500, errorMsg: 'ERROR: INTERNAL SERVER ERROR_500' });
+    }
+}
+
+// CREATE A CLIENT (PUBLIC) ADS API 
+exports.publicAds = async (req, res) => {
+    // GET ALL COMPAIGNS BASED-ON ACTIVE COMPAIGNS
+    try {
+        await Ads_Banners.find({ budget: { $gte: 0 }, ad_status: false }).select('clicks budget banner title url ad_size').exec((err, payload) => {
+            if (err) return next(createError(400, 'FAILED: Something Went Wrong :('));
+            // CHECK IF THE PAYLOAD NOT EMPTY
+            if (!payload || payload === null || payload === undefined) {
+                return res.status(204).json({ status: 204 });
+            };
+
+            // FILTER BASED-ON CLICKS
+            const TOP_COMPAIGNS = c => {
+                return c.filter(cn => {
+                    // THE CLICKS CONDITION CAN BE RE-VALUED
+                    return cn.clicks === 0;
+                });
+            };
+
+            const FILTRED_COMPAIGNS = TOP_COMPAIGNS(payload);
+
+            // CHECK THE LENGTH OF FILTRED TOP COMPAIGNS 
+            if (!FILTRED_COMPAIGNS.length > 0 || TOP_COMPAIGNS === null) {
+                return res.status(204).json({ status: 204 });
+            }
+
+            // APPEND THE COMPAIGN POSITION 
+            /*function setAllowedPositions() {
+                for (let i = 0; i < FILTRED_COMPAIGNS.length; i++) {
+                    if (FILTRED_COMPAIGNS[i]['plan_type'] === "Business") {
+                        FILTRED_COMPAIGNS[i].allowed_positions = { home: true, articles: true, redirect_page: true, popup: true };
+                    } else {
+                        FILTRED_COMPAIGNS[i].allowed_positions = null;
+                    }
+                    switch (FILTRED_COMPAIGNS[i]['plan_type']) {
+                        case "Tester":
+                            FILTRED_COMPAIGNS[i].allowed_positions = { home: false, articles: true, redirect_page: true };
+                        case "Started":
+                            FILTRED_COMPAIGNS[i].allowed_positions = { home: false, articles: true, redirect_page: true };
+                        case "Professional":
+                            FILTRED_COMPAIGNS[i].allowed_positions = { home: true, articles: true, redirect_page: true };
+                        case "Business":
+                            FILTRED_COMPAIGNS[i].allowed_positions = { home: true, articles: true, redirect_page: true, popup: true };
+                    }
+                };
+            };*/
+
+            res.status(200).json({ status: 200, compaigns: FILTRED_COMPAIGNS });
+        });
+    } catch (err) {
+        next(err);
     }
 }
 

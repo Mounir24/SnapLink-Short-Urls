@@ -1,8 +1,9 @@
 /*---- GRAPHICING DATA --> CHART.JS LIBRARY ----*/
 // API FOR GRAPHCING DATA USAGE
+// BASE URL: https://short-url-snaplink.herokuapp.com (ORIGINAL)
+const BASE_URL1 = 'http://localhost:4041';
+
 (async function () {
-    // BASE URL
-    const BASE_URL1 = 'https://short-url-snaplink.herokuapp.com'
     // FETCH DATA FROM API 
     const URLS_DATA_API = `${BASE_URL1}/v1/api/all`;
     await fetch(URLS_DATA_API)
@@ -58,9 +59,9 @@
 
 (async function () {
     // BASE URL
-    const BASE_URL2 = 'https://short-url-snaplink.herokuapp.com';
+    //const BASE_URL2 = 'https://short-url-snaplink.herokuapp.com';
     // FETCH DATA FROM API 
-    await fetch(`${BASE_URL2}/admin/api/urls-sources`)
+    await fetch(`${BASE_URL1}/admin/api/urls-sources`)
         .then(response => response.json())
         .then(data => {
             // CHECK IF THE RESPONSE OK 200
