@@ -40,7 +40,7 @@
                 <div class="row mx-auto text-center mt-4">
                     <div class="col-md-12">
                         <div class="hero__content">
-                            <h1 class="H_S">Generate Cutsomizable Short Links Within seconds</h1>
+                            <h1 class="H_S">Generate Customizable Short Links Within seconds </h1>
                             <p class="H_S">You're just a few clicks away from creating a customizable Short links</p>
                             <div class="hero__buttons">
                                 <button class="btn short-btn" data-tilt>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="bx-dash">
                             <h3>Total Urls</h3>
-                            <span class="urls-count counter">
+                            <span class="urls-count counter-statistics" data-count="">
                                 <%= totalUrls %>
                             </span>
                         </div>
@@ -83,7 +83,7 @@
                         </div>
                         <div class="bx-dash">
                             <h3>Total Clicks</h3>
-                            <span class="urls-count counter">
+                            <span class="urls-count counter-statistics" data-count="<%= totalClicks %>">
                                 <%= totalClicks %>
                             </span>
                         </div>
@@ -96,7 +96,7 @@
                         </div>
                         <div class="bx-dash">
                             <h3>Total Users</h3>
-                            <span class="urls-count counter">
+                            <span class="urls-count counter-statistics" data-count="">
                                 <%= totalUsers %>
                             </span>
                         </div>
@@ -323,6 +323,32 @@
                 <script src="https://cdn.onlymega.com/cktm6legn000ah53xnwimne4r/embed.js?bnTag=" async></script> 
             </div>
         </div>-->
+        <!--<script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', () => {
+                    const counters = document.querySelectorAll(".counter-statistics");
+                    const speed = 400; // speed of counting
+
+                    counters.forEach((counter) => {
+                        const updateCounter = () => {
+                            // + symbol converts a string to number.
+                            const target = +counter.getAttribute('data-count');
+                            const count = +counter.innerText;
+                            const increment = target / speed;
+
+                            if (count < target) {
+                                counter.innerText = Math.floor(count + increment);
+                                setTimeout(updateCounter, 1);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        updateCounter();
+                    });
+            })
+        </script>-->
+        <!-- Bidvertiser2064261 -->
         <script src="/JS/blog.api.js"></script>
+        <!-- jQuery new versioin JS (CDN) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <!-- END ARTICLES SECTION -->
         <%- include('partials/_footer.ejs') %>
