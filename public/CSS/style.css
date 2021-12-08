@@ -615,6 +615,7 @@ tbody > tr a {
 
 .redirect {
   height: 80vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1832,7 +1833,7 @@ article.article_content {
 .warning_block_bx {
   padding: 0.5rem 2rem;
   border-radius: 1.4rem;
-  background:hsl(55, 76%, 58%);
+  background: hsl(55, 76%, 58%);
   color: #fff;
 }
 
@@ -2629,6 +2630,7 @@ tbody > tr a {
 
 .redirect {
   height: 80vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -4552,3 +4554,36 @@ a {
 }
 
 /*----- END STYLING SNAPLINK COMPAIGNS SECTION -------*/
+
+/*----- GLOBAL CSS ------*/
+.navbar-toggler {
+  border: none !important;
+}
+
+.bx-grid-alt {
+  font-size: 30px;
+  color: hsl(217, 68%, 65%);
+}
+
+.mob-layout {
+  width: 100% !important;
+}
+
+/*------ RESPONSIVE LAYOUTS: MOBILE ViewPort --> 360PX ------*/
+@media only screen and(max-width: 360px) {
+  .page_404_main {
+    width: 100% !important;
+  }
+
+  .content {
+    padding: none;
+    padding: 0;
+  }
+  .circle {
+    clip-path: circle(120px at left 600px);
+  }
+
+  .circle-shape {
+    clip-path: circle(100px at right 600px);
+  }
+}

@@ -58,6 +58,12 @@ app.use(httpLogger); // HTTP TRAFFIC LOGGER MODULE
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
+
+// REDIRECT - ROUTE TESTING
+app.get('/redirect', (req, res) => {
+    return res.status(200).render('redirect');
+})
+
 // Middlewares 2
 app.use('/', userRoute);
 // COUNT VISISTS 
