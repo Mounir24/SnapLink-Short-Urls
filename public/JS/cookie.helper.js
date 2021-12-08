@@ -9,7 +9,6 @@ function GET_COOKIE() {
 
 // FINAL UID COOKIE
 const UID_COOKIE = GET_COOKIE();
-console.log('FINAL UID COOKIE: ' + UID_COOKIE)
 const Verify_Token_Form = document.getElementById('verify_token_form');
 Verify_Token_Form.insertAdjacentHTML('afterBegin', `<input type="hidden" id="uid" value="${UID_COOKIE.trim()}">`);
 
@@ -43,8 +42,19 @@ document.getElementById('verify_token_form').addEventListener('submit', (e) => {
     POST_DATA2(`${BASE_URL}/api/verify/token_access`, { token_access: Access_Token, uid: User_Uid }, 'POST')
         .then(data => {
             if (data.status === 200) {
-                alert(data.msg);
-                window.location = '/short-url';
+                // SWAL ALERT
+                swal({
+                    title: 'Valid Token',
+                    text: data.msgSuccess,
+                    icon: "success",
+                    button: "I Got It",
+                }).then(v => {
+                    if (v) {
+                        window.location = '/short-url';
+                        return;
+                    }
+                })
+
             } else {
                 alert('SOMETHING WENT WRONG!')
             }

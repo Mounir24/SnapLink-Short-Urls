@@ -12,6 +12,8 @@ const mime = require('mime');
 const fs = require('fs');
 const shortid = require('shortid');
 const moment = require('moment');
+const User = require('../model/userSchema'); // USER SCHEMA
+
 
 
 // IMPORT HELPERS MODULES 
@@ -37,6 +39,254 @@ const ADMIN_TOKEN_AUTH = async (token, cb) => {
     } catch (err) {
         console.log(err);
         return cb(new Error('ERROR: SERVER INTERNAL ERROR 500'), null)
+    }
+}
+
+// REMOVE USER CONTROLL
+exports.removeUser = async (req, res, next) => {
+    // CATCH USER ID 
+    const { id } = req.body;
+    const token = req.cookies['Token'];
+
+    // CHECK IF THE TOKEN NULL
+    if (!token || token === null || token === undefined) {
+        return res.status(404).json({ success: false, msgError: 'Token Not Found / Expires' })
+    }
+
+    // TOKEN VERIFICATION - VALIDATION
+    await ADMIN_TOKEN_AUTH(token, async (err, admin_payload) => {
+        if (err) return next(err);
+        // DESTRUCTURE THE ADMIN PAYLOAD CREDS
+        const { _id, username, isActive } = admin_payload;
+        // VALIDATE THE ADMIN CREDS AGAINST DB - IF EXIST
+        await Admins.findById(_id, async (err, payload) => {
+            if (err) return res.status(400).json({ success: false, msgError: 'Something Went Wrong!' });
+            if (!payload || payload == null || payload == undefined) {
+                return res.status(401).json({ success: false, msgError: 'Failed: Admin Not Found!' })
+            }
+            // REMOVE USER SUCCESSFULLY 
+            try {
+                // CHECK ID IF EXIST 
+                if (!id || id === undefined) {
+                    return res.status(400).json({ status: 400, msg: 'Unexpected User ID!' })
+                }
+
+                // VALIDATE ID 
+                await User.findByIdAndDelete(id, (err, payload) => {
+                    //CHECK ERR IF EXIST
+                    if (err) {
+                        console.error(err);
+                        return res.status(400).json({ status: 400, msg: 'Bad Request While Deleting User!' })
+                    }
+
+                    //CHECK IF PAYLOAD VALID
+                    if (!payload || payload === null) {
+                        console.log('User With Given ID Not Exist!')
+                        return res.status(400).json({ status: 400, msg: 'User With Given ID Not Exist!' })
+                    }
+                    // FLY RESPONSE 
+                    res.status(200).json({ status: 200, msg: 'User Has Been Removed Successfully' });
+                })
+            } catch (err) {
+                res.status(500).json({ status: 500, msg: 'Internal Server Error' })
+            }
+
+        })
+
+    })
+}
+
+// REMOVE URLs CONTROLL
+exports.removeUrls = async (req, res, next) => {
+    // CATCH URL ID 
+    const { id } = req.body;
+    const token = req.cookies['Token'];
+
+    // CHECK IF THE TOKEN NULL
+    if (!token || token === null || token === undefined) {
+        return res.status(404).json({ success: false, msgError: 'Token Not Found / Expires' })
+    }
+
+    // TOKEN VALIDATION
+    await ADMIN_TOKEN_AUTH(token, async (err, admin_payload) => {
+        if (err) return res.status(400).json({ success: false, msgError: 'Token Not Provided!' });
+        // DESTRUCTURE THE ADMIN PAYLOAD CREDS
+        const { _id, username, isActive } = admin_payload;
+        // VALIDATE THE ADMIN CREDS AGAINST DB - IF EXIST
+        await Admins.findById(_id, async (err, payload) => {
+            if (err) return res.status(400).json({ success: false, msgError: 'Something Went Wrong!' })
+            if (!payload || payload == null || payload == undefined) {
+                return res.status(401).json({ success: false, msgError: 'Access Denied STATUS_401!' })
+            }
+
+            // REMOVE URL BY ID
+            try {
+                // CHECK IF ID NULL
+                if (!id || id === null) {
+                    console.log('Empty Value');
+                    return res.status(400).json({ status: 400, msg: 'Bad request While Processing Removing URL' });
+                }
+
+                // CHECK IF ID EXIST IN DB &
+                // PROCESS REMOVE URL
+                await Url.findByIdAndDelete(id, (err, payload) => {
+                    //CHECK ERROS IF EXIST
+                    if (err) {
+                        console.error(err.message);
+                        return res.status(400).json({ status: 400, msg: 'The Given ID Not Exist!' })
+                    }
+
+                    // SEND RESPONSE 
+                    res.status(200).json({ status: 200, msg: `URL ID: ${id} Has Been Removed!` });
+
+                })
+            } catch (err) {
+                res.status(500).json({ status: 500, msg: 'Internal Server Error!' })
+            }
+        })
+    })
+}
+
+// BLOCK USER CONTROLL
+exports.blockUser = async (req, res, next) => {
+    // CATCH USER ID 
+    const { id } = req.body;
+    const token = req.cookies['Token'];
+
+    // CHECK IF THE TOKEN NULL
+    if (!token || token === null || token === undefined) {
+        return res.status(404).json({ success: false, msgError: 'Token Not Found / Expires' })
+    }
+
+    // TOKEN VALIDATION ACCESS
+    await ADMIN_TOKEN_AUTH(token, async (err, admin_payload) => {
+        if (err) return res.status(400).json({ success: false, msgError: 'Token Not Provided!' })
+        // DESTRUCTURE THE ADMIN PAYLOAD CREDS
+        const { _id, username, isActive } = admin_payload;
+        // VALIDATE THE ADMIN CREDS AGAINST DB - IF EXIST
+
+        await Admins.findById(_id, async (err, payload) => {
+            if (err) return res.status(400).json({ success: false, msgError: "Something Went Wrong!" })
+            if (!payload || payload == null || payload == undefined) {
+                return res.status(401).json({ success: false, msgError: 'Access Denied STATUS_401' });
+            }
+
+            // BLOCK USER 
+            try {
+                // VALIDATE USER ID 
+                if (!id || id === null) {
+                    return res.status(400).json({ status: 400, msg: 'The Given ID Not Valid!' })
+                }
+
+                // CHECK IF EXIST IN DB 
+                await User.findByIdAndUpdate(id, { isBlocked: !false }, { new: true }, async (err, payload) => {
+                    // CHECK ERROR 
+                    if (err) {
+                        console.log('Something Went Wrong , While Gathering User Payload')
+                        return res.status(400).json({ status: 400, msg: 'Something Went Wrong , While Gathering User Payload' })
+                    }
+
+                    // UPDATE USER PAYLOAD -- (isBlocked Key)
+                    /*const { isBlocked } = payload;*/
+                    /*const updatedUserKey = {
+                        isBlocked: !false
+                    }*/
+
+                    /*await User.updateOne(id, updatedUserKey, { new: true }, (err, payload) => {
+                        if (err) {
+                            return res.status(400).json({ status: 400, msg: 'Erro While Updating User' })
+                        }
+                    
+                        //FLY RESPONSE _-_-_-_-_-_
+                        console.log('User Has Been Blocked: ' + id)
+                        res.status(200).json({ status: 200, msg: `User: ${payload.username} Has Been Blocked!` });
+                    })*/
+
+                    //FLY RESPONSE _-_-_-_-_-_
+                    console.log('User Has Been Blocked: ' + id)
+                    res.status(200).json({ status: 200, msg: `User: ${payload.username} Has Been Blocked!` });
+
+                })
+            } catch (err) {
+                res.status(500).json({ status: 500, msg: 'Internal Server Error' })
+            }
+        })
+    })
+}
+
+// UNBLOCK USER CONTROLL
+exports.unblockUser = async (req, res, next) => {
+    // CATCH THE TOKEN 
+    const token = req.cookies['Token'];
+    const { id } = req.body;
+    console.log(id);
+
+    // CHECK IF THE TOKEN NULL
+    if (!token || token === null || token === undefined) {
+        return res.status(404).json({ success: false, msgError: 'Token Not Found / Expires' })
+    }
+
+    try {
+        // VERIFY / DECRYPT THE TOKEN 
+        jwt.verify(token, process.env.AUTH_SECRET, { algorithms: ['SHA256', 'HS256'] }, async (err, payload) => {
+            // CHECK IF THE ERROR THROWN 
+            if (err) {
+                return next(createError(401, 'Token Incorrect / Expiress, Try again!'));
+            }
+
+            // CHECK IF THE PAYLOAD NULL OR UNDEFINED
+            if (!payload || payload === null || payload === undefined) {
+                next(createError(400, 'Error: Something Went Wrong!'));
+            }
+
+            // DESTRUCT THE PAYLOAD OBJECT
+            const { isAdmin, isActive } = payload;
+            console.log(payload);
+
+            // VALID IF THE ADMIN HAS A ROLE OF ADMIN AND HAVE STATUS ACTIVE (ROLE)
+            if (!isAdmin && !isActive) {
+                // SEND 401 RESPONSE 
+                return res.status(401).json({ responseCode: 1, responseDesc: 'UnAuthorized Access! Operation Failed!' });
+            }
+
+            // CHECK IF THE ID NOT VALID
+            if (!isMongoID(id)) {
+                return res.status(400).json({ responseCode: 1, responseDesc: 'Error: User ID Not Valid!' });
+            }
+
+            // UNBLOCK OPERATION START
+            /*-- CHECK THE ID OF THE USER --*/
+            await User.findById(id, async (err, user) => {
+                if (err) {
+                    return next(createError(400, 'Error: Something Went Wrong While Looking For User!'))
+                }
+
+                console.log(user);
+
+                if (!user || user === null || user === undefined) {
+                    return res.status(404).json({ responseCode: 1, responseDesc: 'User With Given ID Not Found!' });
+                }
+
+                /*-- CHECK IF THE USER ALREADY BLOCK OR NOT --*/
+                if (!user.isBlocked) {
+                    return res.status(200).json({ responseCode: 1, responseDesc: 'User Already Unblocked!' })
+                } else {
+                    // UNBLOCK IT (FALSE)
+                    user.isBlocked = false;
+                    await user.save((err, payload) => {
+                        if (err) {
+                            return next(createError(400, 'Error: Something Wet Wrong While Updating User!'));
+                        }
+
+                        // SEND THE 200 SUCCESS RESPONSE
+                        res.status(200).json({ responseCode: 0, responseDesc: `User: ${id} Unblocked Successfully 100%` });
+                    })
+                }
+
+            })
+        })
+    } catch (err) {
+        next(err)
     }
 }
 

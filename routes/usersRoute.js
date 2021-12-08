@@ -1,7 +1,17 @@
 const router = require('express').Router();
 const { verifyAuth, verifyAdminToken } = require('../services/verifyToken');
 const csrf = require('csurf'); // CSRF PROTECTION MODULE 
+const rateLimit = require('express-rate-limit'); // Package for Rate Limiting 
 
+
+// START INITIAING THE RATE-LIMITING MIDDLWARE
+const apiRequestLimiter = rateLimit({
+    windowMs: 3 * 60 * 1000, // 1 MINUTE
+    max: 5,
+    handler: function (req, res) {
+        return res.status(429).json({ status: 429, msgError: 'Warning: Too many login attempts!' })
+    }
+})
 
 // START MIDDLWARES
 const csrfProtection = csrf({ cookie: true });
@@ -79,19 +89,7 @@ router.get('/v1/api/all', useControll.flyData);
 router.post('/api/register', csrfProtection, useControll.registerUser);
 
 // LOGIN USER ENDPOINT
-router.post('/api/login', csrfProtection, useControll.loginUser);
-
-// REMOVE USER ENDPOINT
-router.post('/api/remove', useControll.removeUser);
-
-// BLOCK USER ENDPOINT 
-router.put('/api/block', useControll.blockUser);
-
-// UNBLOCK USER ENDPOINT
-router.put('/api/unblock', useControll.unblockUser);
-
-// REMOVE URLS ENDPOINT 
-router.delete('/api/remove/url', useControll.removeUrls);
+router.post('/api/login', apiRequestLimiter, csrfProtection, useControll.loginUser);
 
 // FORGOT PASSWORD ENDPOINT
 router.post('/api/auth/forgot-password', useControll.forgotPass);

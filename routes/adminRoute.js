@@ -32,6 +32,18 @@ router.post('/api/v1/send-message', adminControll.sendMessage);
 // DOWNLOAD LOGGER ROUTE
 router.get('/logger/download', adminControll.downloadFile);
 
+// REMOVE USER ENDPOINT
+router.post('/api/v1/remove', adminControll.removeUser);
+
+// REMOVE URLS ENDPOINT 
+router.delete('/api/v1/remove/url', adminControll.removeUrls);
+
+// BLOCK USER ENDPOINT 
+router.put('/api/v1/block', adminControll.blockUser);
+
+// UNBLOCK USER ENDPOINT
+router.put('/api/v1/unblock', adminControll.unblockUser);
+
 /*++++++++ ADS SYSTEM API ROUTES +++++++++*/
 /*++++++++                       +++++++++*/
 // RETRIEVE ALL ADS ROUTE

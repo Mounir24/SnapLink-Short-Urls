@@ -18,6 +18,7 @@ const Ads_Banners = require('../model/adsSchema'); // ADS SCHEMA MODEL
 const Subscribers = require('../model/subscriberSchema'); // NewsLetter Model / Schema
 const mail = require('../configuration/mail'); // MAILER
 const validator = require('../services/util/validator'); // VALIDATOR
+const { TOKEN_LOGGER } = require('../services/util/logger/token-logger');
 const isMongoID = require('mongoose').Types.ObjectId.isValid; // METHOD TO CHECK FOR VALID MONGO  OBJECT
 
 // START MIDDLWARES
@@ -278,7 +279,7 @@ exports.loginUser = async (req, res, next) => {
                         const { geo } = user;
                         //console.log(geo[0]["ip"])
                         // CHECK IF THE CURRENT IP MATCHED WITH THE GIVEN IP 
-                        if (CURRENT_IP === geo[0]["ip"]) {
+                        if (CURRENT_IP == geo[0]["ip"]) {
                             console.log(`IP: ${CURRENT_IP} MATCHED WITH ---> ${geo[0]["ip"]}`);
                             // CHECK IF IN CASE USER HAS BEEN BLOCKED -- PREVENT ACCESSING
                             if (user.isBlocked) {
@@ -297,13 +298,15 @@ exports.loginUser = async (req, res, next) => {
                             const TOKEN = SHORT_ID.generate();
                             // UPDATE THE USER ENTRY: LOGIN_TOKEN 
                             user.login_token = TOKEN;
+                            // UPDATE USER GEO IP ENTRY
+                            user.geo[0]['ip'] = CURRENT_IP;
                             await user.save((err, payload) => {
                                 if (err) {
                                     console.error(err.message)
                                     next(createError(400, err.message))
                                 }
-                                console.log(payload);
-                                console.log('TOKEN ASSIGNED SUCCESSFULLY TO THE USER ENTRY: ' + TOKEN);
+                                // LOG THE TOKEN TO THE LOGGER FILE
+                                TOKEN_LOGGER(req.url, TOKEN, username);
                                 // SEND THE TOKEN TO LIGITIMATE USER
                                 const mailOpts = {
                                     from: process.env.EMAIL,
@@ -882,39 +885,8 @@ exports.userProfile = async (req, res) => {
 
 }
 
-// REMOVE USER CONTROLL
-exports.removeUser = async (req, res) => {
-    // CATCH USER ID 
-    const { id } = req.body;
-    try {
-        // CHECK ID IF EXIST 
-        if (!id || id === undefined) {
-            return res.status(400).json({ status: 400, msg: 'Unexpected User ID!' })
-        }
-
-        // VALIDATE ID 
-        await User.findByIdAndDelete(id, (err, payload) => {
-            //CHECK ERR IF EXIST
-            if (err) {
-                console.error(err);
-                return res.status(400).json({ status: 400, msg: 'Bad Request While Deleting User!' })
-            }
-
-            //CHECK IF PAYLOAD VALID
-            if (!payload || payload === null) {
-                console.log('User With Given ID Not Exist!')
-                return res.status(400).json({ status: 400, msg: 'User With Given ID Not Exist!' })
-            }
-            // FLY RESPONSE 
-            res.status(200).json({ status: 200, msg: 'User Has Been Removed Successfully' });
-        })
-    } catch (err) {
-        res.status(500).json({ status: 500, msg: 'Internal Server Error' })
-    }
-}
-
 // REMOVE URLs CONTROLL
-exports.removeUrls = async (req, res) => {
+/*exports.removeUrls = async (req, res) => {
     // CATCH URL ID 
     const { id } = req.body;
     try {
@@ -940,7 +912,7 @@ exports.removeUrls = async (req, res) => {
     } catch (err) {
         res.status(500).json({ status: 500, msg: 'Internal Server Error!' })
     }
-}
+}*/
 
 // BLOCK USER CONTROLL
 exports.blockUser = async (req, res) => {
@@ -984,82 +956,6 @@ exports.blockUser = async (req, res) => {
         })
     } catch (err) {
         res.status(500).json({ status: 500, msg: 'Internal Server Error' })
-    }
-}
-
-// UNBLOCK USER CONTROLL
-exports.unblockUser = async (req, res, next) => {
-    // CATCH THE TOKEN 
-    const token = req.cookies['Token'];
-    const { id } = req.body;
-    console.log(id);
-
-    // CHECK IF THE TOKEN NULL
-    if (!token || token === null || token === undefined) {
-        return next(createError(404, 'Token Not Found / Expiress'));
-    }
-
-    try {
-        // VERIFY / DECRYPT THE TOKEN 
-        jwt.verify(token, process.env.AUTH_SECRET, { algorithms: ['SHA256', 'HS256'] }, async (err, payload) => {
-            // CHECK IF THE ERROR THROWN 
-            if (err) {
-                return next(createError(401, 'Token Incorrect / Expiress, Try again!'));
-            }
-
-            // CHECK IF THE PAYLOAD NULL OR UNDEFINED
-            if (!payload || payload === null || payload === undefined) {
-                next(createError(400, 'Error: Something Went Wrong!'));
-            }
-
-            // DESTRUCT THE PAYLOAD OBJECT
-            const { isAdmin, isActive } = payload;
-            console.log(payload);
-
-            // VALID IF THE ADMIN HAS A ROLE OF ADMIN AND HAVE STATUS ACTIVE (ROLE)
-            if (!isAdmin && !isActive) {
-                // SEND 401 RESPONSE 
-                return res.status(401).json({ responseCode: 1, responseDesc: 'UnAuthorized Access! Operation Failed!' });
-            }
-
-            // CHECK IF THE ID NOT VALID
-            if (!isMongoID(id)) {
-                return res.status(400).json({ responseCode: 1, responseDesc: 'Error: User ID Not Valid!' });
-            }
-
-            // UNBLOCK OPERATION START
-            /*-- CHECK THE ID OF THE USER --*/
-            await User.findById(id, async (err, user) => {
-                if (err) {
-                    return next(createError(400, 'Error: Something Went Wrong While Looking For User!'))
-                }
-
-                console.log(user);
-
-                if (!user || user === null || user === undefined) {
-                    return res.status(404).json({ responseCode: 1, responseDesc: 'User With Given ID Not Found!' });
-                }
-
-                /*-- CHECK IF THE USER ALREADY BLOCK OR NOT --*/
-                if (!user.isBlocked) {
-                    return res.status(200).json({ responseCode: 1, responseDesc: 'User Already Unblocked!' })
-                } else {
-                    // UNBLOCK IT (FALSE)
-                    user.isBlocked = false;
-                    await user.save((err, payload) => {
-                        if (err) {
-                            return next(createError(400, 'Error: Something Wet Wrong While Updating User!'));
-                        }
-
-                        // SEND THE 200 SUCCESS RESPONSE
-                        res.status(200).json({ responseCode: 0, responseDesc: `User: ${id} Unblocked Successfully 100%` });
-                    })
-                }
-
-            })
-        })
-    } catch (err) {
-        next(err)
     }
 }
 
@@ -1701,7 +1597,7 @@ exports.verifyTokenAccess = async (req, res, next) => {
                 })
                 // SEND TOKEN AS COOKIE
                 res.cookie('Auth-Token', ACCESS_TOKEN, { maxAge: 180000 * 24, httpOnly: true });
-                return res.status(200).json({ status: 200 });
+                return res.status(200).json({ status: 200, msgSuccess: 'Token Verified Successfully 100%' });
             }
         })
     } catch (err) {

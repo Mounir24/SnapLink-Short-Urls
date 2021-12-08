@@ -114,11 +114,18 @@ $('#user-login').submit((e) => {
             // ASSIGN UID AS COOKIE
             const UID = data.uid;
             document.cookie = "UID=" + UID;
-            alert('USER COOKIE: ' + UID); // TEST COOKIE IF ASSIGNED OT NOT
             window.location = '/verify_Token';
         } else if (data.status === 200) {
             signupForm.insertAdjacentHTML('afterbegin', `<p class="success_block_bx">Successfuly Login</p>`);
             window.location = '/short-url'
+        } else if (data.status === 429) {
+            swal({
+                title: 'Warning!',
+                text: data.msgError,
+                icon: "warning",
+                button: "I Got It",
+            });
+            //signupForm.insertAdjacentHTML('afterbegin', `<p class="warning_block_bx">${data.msgError}</p>`)
         } else if (data.status === 400) { signupForm.insertAdjacentHTML('afterbegin', `<p class="alert_block_bx">${data.message}</p>`) } else if (data.status === 401) { signupForm.insertAdjacentHTML('afterbegin', `<p class="alert_block_bx">${data.message}</p>`) } else { signupForm.insertAdjacentHTML('afterbegin', `<p style="color:red">Something Went Wrong!</p>`) }
     })
 })
@@ -133,7 +140,7 @@ $('#admin-login').submit((e) => {
     $.map(unindexed__arr, function (n, i) { data[n.name] = n.value });
     const captcha = $('#g-recaptcha-response').val();
     data.captcha = captcha;
-    fetch(`${BASE_URL}/api/admin/login`, { method: "POST", headers: { "Content-Type": "Application/json" }, body: JSON.stringify(data) }).then(response => response.json()).then(data => {
+    fetch(`${BASE_URL}${atob('L2FwaS9hZG1pbi9sb2dpbg==')}`, { method: "POST", headers: { "Content-Type": "Application/json" }, body: JSON.stringify(data) }).then(response => response.json()).then(data => {
         loginBtn.style.opacity = 1;
         loginBtn.innerText = 'login';
         loginBtn.style.cursor = 'pointer';
@@ -159,7 +166,7 @@ unindexed__btns__arr.map(btn => {
         const data_id = btn.getAttribute('data-id');
         swal({ title: "Are you sure?", text: "Once deleted, you will not be able to recover this imaginary file!", icon: "warning", buttons: !0, dangerMode: !0, }).then((willDelete) => {
             if (willDelete) {
-                POST_DATA2(`${BASE_URL}/api/remove`, { id: data_id }, 'POST').then(data => {
+                POST_DATA2(`${BASE_URL}${atob('L2FkbWluL2FwaS92MS9yZW1vdmU=')}`, { id: data_id }, 'POST').then(data => {
                     if (!data) { return alert('Server Response Empty!') }
                     if (data.status === 200) {
                         const TD_ELE = btn.parentElement.parentElement;
@@ -180,7 +187,7 @@ unindexed__block__btns.map(BLOCK_BTN => {
         const block_id = BLOCK_BTN.getAttribute('data-id');
         swal({ title: "Are you sure?", text: "You wanna Block This User , Are You Agree ?", icon: "warning", buttons: !0, dangerMode: !0, }).then((willDelete) => {
             if (willDelete) {
-                POST_DATA2(`${BASE_URL}/api/block`, { id: block_id }, 'PUT').then(data => {
+                POST_DATA2(`${BASE_URL}${atob('L2FkbWluL2FwaS92MS9ibG9jaw==')}`, { id: block_id }, 'PUT').then(data => {
                     if (!data) { return alert('Server Response Empty!') }
                     if (data.status === 200) {
                         const TD_ELE = BLOCK_BTN.parentElement.parentElement;
@@ -202,7 +209,7 @@ unindexed__unblock__btns.map(unblock_btn => {
         const target_btn_id = unblock_btn.getAttribute('data-id');
         swal({ title: "Are you sure?", text: "You wanna Unblock This User , Are you Agree ? ", icon: "warning", buttons: !0, dangerMode: !0, }).then((willDelete) => {
             if (willDelete) {
-                POST_DATA2(`${BASE_URL}/api/unblock`, { id: target_btn_id }, 'PUT').then(data => {
+                POST_DATA2(`${BASE_URL}${atob('L2FkbWluL2FwaS92MS91bmJsb2Nr')}`, { id: target_btn_id }, 'PUT').then(data => {
                     if (!data) { return salert('Server Response Empty!') }
                     if (data.responseCode === 1) { CUSTOM_ALERTS('warning', 'Error Catched!', data.responseDesc) } else if (data.responseCode === 0) {
                         CUSTOM_ALERTS('success', 'Succsessfully 100%', data.responseDesc);
@@ -224,7 +231,7 @@ btns__arr.map(btn => {
         btn.style.opacity = 0.5;
         btn.style.cursor = 'not-allowed';
         btn.innerText = 'Removing...'
-        fetch(`${BASE_URL}/api/remove/url`, { method: 'DELETE', headers: { "Content-Type": "Application/json" }, body: JSON.stringify({ id: btn_id }) }).then(response => response.json()).then(data => {
+        fetch(`${BASE_URL}${atob('L2FkbWluL2FwaS92MS9yZW1vdmUvdXJs')}`, { method: 'DELETE', headers: { "Content-Type": "Application/json" }, body: JSON.stringify({ id: btn_id }) }).then(response => response.json()).then(data => {
             if (data === null || !data) { return alert('Empty Payload!!') }
             if (data.status === 200) {
                 const TD_ELE = btn.parentElement.parentElement;

@@ -1829,6 +1829,13 @@ article.article_content {
   color: #fff;
 }
 
+.warning_block_bx {
+  padding: 0.5rem 2rem;
+  border-radius: 1.4rem;
+  background:hsl(55, 76%, 58%);
+  color: #fff;
+}
+
 .success_block_bx {
   padding: 0.5rem 2rem;
   border-radius: 1.4rem;
