@@ -178,7 +178,10 @@ exports.getSingleBlog = async (req, res, next) => {
     // CATCH THE BLOG ID PARAMS
     //const { pid } = req.params;
     const queryObj = req.query;
-    console.log(queryObj)
+
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
     // CHECK ARTICLE ID IF EXIST
     if (!queryObj.pid) {
         console.error('Article ID Not Provided!')

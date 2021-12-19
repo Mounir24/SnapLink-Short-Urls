@@ -336,6 +336,9 @@ exports.loginUser = async (req, res, next) => {
 exports.homeStatics = async (req, res, next) => {
     /*const token = res.get('Auth-Token');
     console.log(token)*/
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
     try {
         //let totalUsers;
         const totalUsers = await User.find().select('username geo');
@@ -645,6 +648,10 @@ exports.singleUrl = async (req, res, next) => {
     let referer_source = req.headers.referer;
     const BASE_URL2 = req.protocol + '://' + req.get('host') + '/';
 
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
+
     // CHECK IF THE URL SOURCE NULL || UNDEFINED
     if (!referer_source || referer_source === null || referer_source === undefined) {
         referer_source = 'https://www.snaplink.com';
@@ -847,6 +854,9 @@ exports.userProfile = async (req, res) => {
     // CHATCH USER TOKEN 
     const token = req.cookies['Auth-Token'];
 
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
     //CHECK IF TOKEN EXIST
     if (!token) {
         console.error('Token Not Found!')
@@ -964,6 +974,9 @@ exports.forgotPass = async (req, res) => {
     // CATCH USER E-MAIL
     const { email, captcha } = req.body;
 
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
     try {
         // CAPCTHA VALIDATION
         if (!captcha || captcha === undefined || captcha === '' || captcha === null) {

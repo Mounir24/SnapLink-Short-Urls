@@ -7,6 +7,7 @@ const dbConnection = require('./configuration/connection');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const helmet = require('helmet'); // Helmet Security Package
+const axios = require('axios');
 //const session = require('express-session');
 
 
@@ -30,6 +31,7 @@ const corsOptions = {
     //origin: "https://snaplink.herokuapp.com",
     optionsSuccessStatus: 200
 }
+
 
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard({ action: 'deny' }));
@@ -74,8 +76,10 @@ app.use('/', userRoute);
     }
     next();
 })*/
+
+
 // ERROR HANDLER MIDDLEWARE
-app.use((err, req, res, next) => {
+app.use(async (err, req, res, next) => {
     //console.log(err.message);
     //console.log(err);
     if (err instanceof URIError) {
@@ -89,6 +93,7 @@ app.use((err, req, res, next) => {
         error: err.message,
         path: req.url
     });
+    next();
 })
 
 

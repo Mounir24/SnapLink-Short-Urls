@@ -25,6 +25,7 @@ const HTTP_LOGGER = morgan(FORMAT, {
                 responseTime,
             } = JSON.parse(message);
 
+            // UPDATE VISITORS 
             // START UPDATING HTTP LOGGER FILE LOG 
             (async function () {
                 // GET REQUEST IP

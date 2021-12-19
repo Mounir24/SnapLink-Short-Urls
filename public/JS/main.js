@@ -317,6 +317,19 @@ $('#url_form').submit(e => {
 });
 
 
+
+// GET TOTAL VISITS 
+const totalVisits = document.getElementById('totalVisits');
+(async function () {
+    // IF VISITS HITs: 1000 --> MAKE IT --> 1K , and so on , until hits 1M or more
+    const API_END = 'https://api.countapi.xyz/get/snaplink.link/snaplink';
+    await fetch(API_END).then(res => res.json()).
+        then(data => {
+            totalVisits.innerText = data.value;
+        })
+})();
+
+
 // START REDDERING COMPAIGNS 
 /*(async function () {
     const API_ENDPOINT = "L2FwaS92MS9jbGllbnQvYWRz";

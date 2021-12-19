@@ -4569,6 +4569,10 @@ a {
   width: 100% !important;
 }
 
+.bx-show {
+  font-size: 30px;
+}
+
 /*------ RESPONSIVE LAYOUTS: MOBILE ViewPort --> 360PX ------*/
 @media only screen and(max-width: 360px) {
   .page_404_main {

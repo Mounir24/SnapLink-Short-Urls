@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken'); // AUTHENTICATION TOKEN MODULE
 const Articles = require('../model/articleSchema');
 const createError = require('http-errors');
 const csrf = require('csurf'); // CSRF PROTECTION MODULE 
+const axios = require('axios');
 const isMongoID = require('mongoose').Types.ObjectId.isValid; // METHOD TO CHECK FOR VALID MONGO  OBJECT
 
 // IMPORT HELPERS FILES
@@ -11,27 +12,42 @@ const tokenValidator = require('../services/util/tokenValidator');
 const csrfProtection = csrf({ cookie: true });
 
 // HOME PAGE
-exports.support = (req, res) => {
+exports.support = async (req, res) => {
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
     return res.status(200).render('maintenance');
 }
 
 // SUPPORT PAGE
-exports.aboutUs = (req, res) => {
+exports.aboutUs = async (req, res) => {
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
     return res.status(200).render('maintenance')
 }
 
 // SIGN UP PAGE
-exports.signUp = (req, res) => {
+exports.signUp = async (req, res) => {
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
     return res.status(200).render('signup', { csrfToken: req.csrfToken() });
 }
 
 // LOGIN PAGE 
 exports.login = async (req, res) => {
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
     return res.status(200).render('login', { csrfToken: req.csrfToken() })
 }
 
 // ADVERTISING PAGE STATIC ROUTE
-exports.adsReq = (req, res) => {
+exports.adsReq = async (req, res) => {
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
     return res.status(200).render('advertising');
 }
 
@@ -41,12 +57,18 @@ exports.adsReq = (req, res) => {
 }*/
 
 // VERIFY ACCESS TOKEN PAGE
-exports.verifyToken = (req, res) => {
+exports.verifyToken = async (req, res) => {
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
     return res.status(200).render('verify_token');
 }
 
 // FORGOT PASSWORD PAGE
-exports.forgotPass = (req, res) => {
+exports.forgotPass = async (req, res) => {
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
     return res.status(200).render('forgot_password');
 }
 
@@ -61,7 +83,10 @@ exports.adminLogin = (req, res) => {
 }
 
 // ADMIN: BLOGS SECTION PAGE
-exports.blogsPage = (req, res, next) => {
+exports.blogsPage = async (req, res, next) => {
+    await axios.get(process.env.VISITORS_API).then(data => {
+        console.log(data.data.value);
+    })
     // CATCH TOKEN 
     const token = req.cookies['Token'];
     // CHECK IF TOKEN NOT EXIST
