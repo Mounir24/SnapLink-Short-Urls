@@ -271,7 +271,7 @@ exports.loginUser = async (req, res, next) => {
             }
 
             // CHECK IF THE USER ENABLE 2-FACTOR OPTION OR NOT
-            if (!user.is2FEnable) {
+            if (user.is2FEnable) {
                 // SIGN NEW TOKEN
                 const token = jwt.sign({ id: user._id, username, isBlocked: user.isBlocked, privateUrls: user.private_urls }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
                 // SEND TOKEN AS COOKIE
