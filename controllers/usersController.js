@@ -1799,7 +1799,7 @@ exports.updateProfileSettings = async (req, res) => {
         jwt.verify(Token, process.env.REFRESH_TOKEN, { algorithms: ['SHA256', 'HS256'] }, async (err, payload) => {
             // CHECK IF ERROR EXIST
             if (err) {
-                return res.status(400).json({ status: 400, msg: 'Invalid Token / Expires!' })
+                return res.status(400).json({ success: false, msgError: 'Invalid Token / Expires!' })
             }
 
             // GET THE USERNAME FROM THE TOKEN DATA
@@ -1821,7 +1821,7 @@ exports.updateProfileSettings = async (req, res) => {
                 // UPDATE USER 2-Factory Security Setting option
                 user_payload.is2FEnable = Boolean(settingsObj.is2FactoryEnable);
                 await user_payload.save((err, payload) => {
-                    if (err) return res.status(400).json({ success: 400, msgError: 'Failed While Updating User State!' })
+                    if (err) return res.status(400).json({ success: false, msgError: 'Failed While Updating User State!' })
                     console.log(payload);
                     // RESPOND TO THE CLIENT
                     res.status(200).json({ success: true, response: `2-Factory Option: ${isEnabled}` })

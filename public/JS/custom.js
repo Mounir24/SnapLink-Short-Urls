@@ -9,7 +9,7 @@ const PostSettings = async (url = '', data, method = '') => {
 $('#2-Factory').submit(async (e) => {
     e.preventDefault();
     // API ENDPOINT
-    const API_ENDPOINT = 'http://localhost:8080/api/v1/settings';
+    const API_ENDPOINT = '/api/v1/settings';
     // GET FORM INPUT VALUES AS OBJECT
     const newSettingsObj = $('#2-Factory').serializeArray();
     // DATA OBJECT
@@ -20,13 +20,20 @@ $('#2-Factory').submit(async (e) => {
     })
 
     // POST THE CURRENT SETTINGS TO THE SERVER
-    await PostSettings(API_ENDPOINT, settingObj, 'POST')
+    await PostSettings(`https://short-url-snaplink.herokuapp.com${API_ENDPOINT}`, settingObj, 'POST')
         .then(data => {
             if (data.success) {
                 swal({
                     title: 'Profile Setting Updated!',
                     text: data.response,
                     icon: "success",
+                    button: "I Got It",
+                });
+            } else if (!data.success) {
+                swal({
+                    title: 'OOPS!',
+                    text: data.msgError,
+                    icon: "warning",
                     button: "I Got It",
                 });
             } else {
