@@ -277,7 +277,7 @@ exports.loginUser = async (req, res, next) => {
                 // SEND TOKEN AS COOKIE
                 res.cookie('Auth-Token', token, { maxAge: 180000 * 24, httpOnly: true });
                 return res.status(200).json({ status: 200 });
-            } else if (user.is2FEnable === false) {
+            } else if (user.is2FEnable === true) {
                 // IP CHECKER --> SECURITY REASON -- TOKEN AUTH
                 // GET USER ID 
                 (async function () {
