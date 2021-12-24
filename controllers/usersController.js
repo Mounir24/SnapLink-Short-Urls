@@ -1803,7 +1803,7 @@ exports.updateProfileSettings = async (req, res) => {
             }
 
             // GET THE USERNAME FROM THE TOKEN DATA
-            const { id, username } = payload;
+            const { id } = payload;
             // CHECK IF THE GIVEN USER EXIST OR NOT
             await User.findById(id, async (err, user_payload) => {
                 if (err) return res.status(400).json({ success: false, msgError: "Failed To Lookup For Provided User ID!" })
@@ -1822,9 +1822,10 @@ exports.updateProfileSettings = async (req, res) => {
                 user_payload.is2FEnable = Boolean(settingsObj.is2FactoryEnable);
                 await user_payload.save((err, payload) => {
                     if (err) return res.status(400).json({ success: false, msgError: 'Failed While Updating User State!' })
-                    console.log(payload);
-                    // RESPOND TO THE CLIENT
-                    res.status(200).json({ success: true, response: `2-Factory Option: ${isEnabled}` })
+                    if (payload) {
+                        // RESPOND TO THE CLIENT
+                        res.status(200).json({ success: true, response: `2-Factory Option: ${isEnabled}` })
+                    }
 
                 })
             })
