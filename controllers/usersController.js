@@ -1804,30 +1804,35 @@ exports.updateProfileSettings = async (req, res) => {
 
             // GET THE USERNAME FROM THE TOKEN DATA
             const { id } = payload;
+            // CHECK IF THE USER ABLE / DISABLE THE 2-FACTORY SECURITY
+            let isEnabled = '';
+            if (settingsObj.is2FactoryEnable == "true") {
+                isEnabled = 'Enabled'
+            } else if (settingsObj.is2FactoryEnable == "false") {
+                isEnabled = 'Disabled'
+            }
             // CHECK IF THE GIVEN USER EXIST OR NOT
-            await User.findById(id, async (err, user_payload) => {
+            await User.findByIdAndUpdate(id, { is2FEnable: Boolean(settingsObj.is2FactoryEnable) }, { $new: true }, async (err, user_payload) => {
                 if (err) return res.status(400).json({ success: false, msgError: "Failed To Lookup For Provided User ID!" })
 
                 if (!user_payload || user_payload == null || user_payload == undefined) {
                     return res.status(404).json({ success: false, msgError: "User With Given Token ID Not Exist!" });
                 }
-                // CHECK IF THE USER ABLE / DISABLE THE 2-FACTORY SECURITY
-                let isEnabled = '';
-                if (settingsObj.is2FactoryEnable == "true") {
-                    isEnabled = 'Enabled'
-                } else if (settingsObj.is2FactoryEnable == "false") {
-                    isEnabled = 'Disabled'
+
+                if (user_payload) {
+                    console.log('IsEnabled: ' + user_payload.is2FEnable)
+                    // RESPOND TO THE CLIENT
+                    res.status(200).json({ success: true, response: `2-Factory Option: ${isEnabled}` })
                 }
                 // UPDATE USER 2-Factory Security Setting option
-                user_payload.is2FEnable = Boolean(settingsObj.is2FactoryEnable);
+                /*user_payload.is2FEnable = Boolean(settingsObj.is2FactoryEnable);
                 await user_payload.save((err, payload) => {
                     if (err) return res.status(400).json({ success: false, msgError: 'Failed While Updating User State!' })
                     if (payload) {
-                        // RESPOND TO THE CLIENT
-                        res.status(200).json({ success: true, response: `2-Factory Option: ${isEnabled}` })
+                        
                     }
 
-                })
+                })*/
             })
 
         })
