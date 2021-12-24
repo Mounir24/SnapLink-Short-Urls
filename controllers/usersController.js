@@ -1812,7 +1812,7 @@ exports.updateProfileSettings = async (req, res) => {
                 isEnabled = 'Disabled'
             }
             // CHECK IF THE GIVEN USER EXIST OR NOT
-            await User.findByIdAndUpdate(id, { is2FEnable: Boolean(settingsObj.is2FactoryEnable) }, { $new: true }, async (err, user_payload) => {
+            await User.findByIdAndUpdate(id, { is2FEnable: Boolean(settingsObj.is2FactoryEnable) }, { new: true }, async (err, user_payload) => {
                 if (err) return res.status(400).json({ success: false, msgError: "Failed To Lookup For Provided User ID!" })
 
                 if (!user_payload || user_payload == null || user_payload == undefined) {
