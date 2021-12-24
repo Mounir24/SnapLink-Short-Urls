@@ -1813,7 +1813,7 @@ exports.updateProfileSettings = async (req, res) => {
             }
             const is2FA = isEnabled == 'Enabled' ? true : false;
             // CHECK IF THE GIVEN USER EXIST OR NOT
-            await User.findByIdAndUpdate(id, { is2FEnable:  }, async (err, user_payload) => {
+            await User.findByIdAndUpdate(id, { is2FEnable: is2FA }, async (err, user_payload) => {
                 if (err) return res.status(400).json({ success: false, msgError: "Failed To Lookup For Provided User ID!" })
 
                 if (!user_payload || user_payload == null || user_payload == undefined) {
