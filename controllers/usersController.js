@@ -1806,13 +1806,14 @@ exports.updateProfileSettings = async (req, res) => {
             const { id } = payload;
             // CHECK IF THE USER ABLE / DISABLE THE 2-FACTORY SECURITY
             let isEnabled = '';
-            if (settingsObj.is2FactoryEnable == "true") {
+            if (settingsObj.is2FactoryEnable === "true") {
                 isEnabled = 'Enabled'
-            } else if (settingsObj.is2FactoryEnable == "false") {
+            } else if (settingsObj.is2FactoryEnable === "false") {
                 isEnabled = 'Disabled'
             }
+            const is2FA = isEnabled == 'Enabled' ? true : false;
             // CHECK IF THE GIVEN USER EXIST OR NOT
-            await User.findOneAndUpdate({ _id: id }, { is2FEnable: Boolean(settingsObj.is2FactoryEnable) }, async (err, user_payload) => {
+            await User.findByIdAndUpdate(id, { is2FEnable:  }, async (err, user_payload) => {
                 if (err) return res.status(400).json({ success: false, msgError: "Failed To Lookup For Provided User ID!" })
 
                 if (!user_payload || user_payload == null || user_payload == undefined) {
