@@ -863,9 +863,9 @@ exports.userProfile = async (req, res) => {
     // CHATCH USER TOKEN 
     const token = req.cookies['Auth-Token'];
 
-    /*await axios.get(process.env.VISITORS_API).then(data => {
+    await axios.get(process.env.VISITORS_API).then(data => {
         console.log(data.data.value);
-    })*/
+    })
     //CHECK IF TOKEN EXIST
     if (!token) {
         console.error('Token Not Found!')
