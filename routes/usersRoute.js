@@ -115,5 +115,8 @@ router.post('/api/v1/plan_request', useControll.planRequest);
 // CREATE A CLIENT (PUBLIC) API ROUTE ENDPOINT
 router.get('/api/v1/client/ads', useControll.publicAds);
 
+// UPDATE PROFILE SETTINGS 
+router.post('/api/v1/settings', useControll.updateProfileSettings)
+
 // EXPORT ROUTES MODULE
 module.exports = router;

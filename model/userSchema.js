@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
     isBlocked: { type: Boolean, default: false },
     private_urls: [],
     sources: [],
+    is2FEnable: { type: Boolean, default: false },
     role: { type: String, default: 'user' },
     login_token: { type: String, default: '' },
     joined_at: { type: String, default: moment().format('DD/MM/YYYY') }

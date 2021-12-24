@@ -270,63 +270,72 @@ exports.loginUser = async (req, res, next) => {
                 return res.status(400).json({ status: 400, message: 'Invalid Username / Password!' })
             }
 
-            // IP CHECKER --> SECURITY REASON -- TOKEN AUTH
-            // GET USER ID 
-            (async function () {
-                await axios.get('https://api.ipify.org?format=json')
-                    .then(async data => {
-                        const CURRENT_IP = data.data.ip;
-                        const { geo } = user;
-                        //console.log(geo[0]["ip"])
-                        // CHECK IF THE CURRENT IP MATCHED WITH THE GIVEN IP 
-                        if (CURRENT_IP == geo[0]["ip"]) {
-                            console.log(`IP: ${CURRENT_IP} MATCHED WITH ---> ${geo[0]["ip"]}`);
-                            // CHECK IF IN CASE USER HAS BEEN BLOCKED -- PREVENT ACCESSING
-                            if (user.isBlocked) {
-                                return res.status(401).json({ status: 401, message: `user: ${user.username} Has Been Blocked!` })
-                            }
-
-                            // SIGN NEW TOKEN
-                            const token = jwt.sign({ id: user._id, username, isBlocked: user.isBlocked, privateUrls: user.private_urls }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
-                            // SEND TOKEN AS COOKIE
-                            res.cookie('Auth-Token', token, { maxAge: 180000 * 24, httpOnly: true });
-                            return res.status(200).json({ status: 200 });
-
-                        } else {
-                            //console.log(`${CURRENT_IP} DOESN\'t MATCH !!`);
-                            // CREATE A SIMPLE TOKEN THAT CONTAINS 8 CHARACTERS
-                            const TOKEN = SHORT_ID.generate();
-                            // UPDATE THE USER ENTRY: LOGIN_TOKEN 
-                            user.login_token = TOKEN;
-                            // UPDATE USER GEO IP ENTRY
-                            user.geo[0]['ip'] = CURRENT_IP;
-                            await user.save((err, payload) => {
-                                if (err) {
-                                    console.error(err.message)
-                                    next(createError(400, err.message))
+            // CHECK IF THE USER ENABLE 2-FACTOR OPTION OR NOT
+            if (!user.is2FEnable) {
+                // SIGN NEW TOKEN
+                const token = jwt.sign({ id: user._id, username, isBlocked: user.isBlocked, privateUrls: user.private_urls }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
+                // SEND TOKEN AS COOKIE
+                res.cookie('Auth-Token', token, { maxAge: 180000 * 24, httpOnly: true });
+                return res.status(200).json({ status: 200 });
+            } else {
+                // IP CHECKER --> SECURITY REASON -- TOKEN AUTH
+                // GET USER ID 
+                (async function () {
+                    await axios.get('https://api.ipify.org?format=json')
+                        .then(async data => {
+                            const CURRENT_IP = data.data.ip;
+                            const { geo } = user;
+                            //console.log(geo[0]["ip"])
+                            // CHECK IF THE CURRENT IP MATCHED WITH THE GIVEN IP 
+                            if (CURRENT_IP == geo[0]["ip"]) {
+                                console.log(`IP: ${CURRENT_IP} MATCHED WITH ---> ${geo[0]["ip"]}`);
+                                // CHECK IF IN CASE USER HAS BEEN BLOCKED -- PREVENT ACCESSING
+                                if (user.isBlocked) {
+                                    return res.status(401).json({ status: 401, message: `user: ${user.username} Has Been Blocked!` })
                                 }
-                                // LOG THE TOKEN TO THE LOGGER FILE
-                                TOKEN_LOGGER(req.url, TOKEN, username);
-                                // SEND THE TOKEN TO LIGITIMATE USER
-                                const mailOpts = {
-                                    from: process.env.EMAIL,
-                                    to: user.email,
-                                    subject: 'SnapLink: Access TOKEN For Your SnapLink Account',
-                                    html: `
+
+                                // SIGN NEW TOKEN
+                                const token = jwt.sign({ id: user._id, username, isBlocked: user.isBlocked, privateUrls: user.private_urls }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
+                                // SEND TOKEN AS COOKIE
+                                res.cookie('Auth-Token', token, { maxAge: 180000 * 24, httpOnly: true });
+                                return res.status(200).json({ status: 200 });
+
+                            } else {
+                                //console.log(`${CURRENT_IP} DOESN\'t MATCH !!`);
+                                // CREATE A SIMPLE TOKEN THAT CONTAINS 8 CHARACTERS
+                                const TOKEN = SHORT_ID.generate();
+                                // UPDATE THE USER ENTRY: LOGIN_TOKEN 
+                                user.login_token = TOKEN;
+                                // UPDATE USER GEO IP ENTRY
+                                user.geo[0]['ip'] = CURRENT_IP;
+                                await user.save((err, payload) => {
+                                    if (err) {
+                                        console.error(err.message)
+                                        next(createError(400, err.message))
+                                    }
+                                    // LOG THE TOKEN TO THE LOGGER FILE
+                                    TOKEN_LOGGER(req.url, TOKEN, username);
+                                    // SEND THE TOKEN TO LIGITIMATE USER
+                                    const mailOpts = {
+                                        from: process.env.EMAIL,
+                                        to: user.email,
+                                        subject: 'SnapLink: Access TOKEN For Your SnapLink Account',
+                                        html: `
                                         <h2>SnapLink Access Token - Important For Accessing Your SnapLink</h2>
                                         <p>Maybe Someone Wanna Access Your Account From This IP: ${CURRENT_IP}</p>
                                         <span>Your Access Token: ${TOKEN}</span>
                                     `
-                                };
-                                mail(mailOpts);
-                                //res.status(302).render('verify_token', { email: user.email, username: user.username });
-                                //res.cookie('SESSID', user._id, { maxAge: 180000 * 24, httpOnly: false });
-                                res.status(302).json({ status: 302, uid: user._id });
-                            })
+                                    };
+                                    mail(mailOpts);
+                                    //res.status(302).render('verify_token', { email: user.email, username: user.username });
+                                    //res.cookie('SESSID', user._id, { maxAge: 180000 * 24, httpOnly: false });
+                                    res.status(302).json({ status: 302, uid: user._id });
+                                })
 
-                        }
-                    });
-            })()
+                            }
+                        });
+                })()
+            }
         })
     } catch (err) {
         next(err);
@@ -336,9 +345,9 @@ exports.loginUser = async (req, res, next) => {
 exports.homeStatics = async (req, res, next) => {
     /*const token = res.get('Auth-Token');
     console.log(token)*/
-    await axios.get(process.env.VISITORS_API).then(data => {
+    /*await axios.get(process.env.VISITORS_API).then(data => {
         console.log(data.data.value);
-    })
+    })*/
     try {
         //let totalUsers;
         const totalUsers = await User.find().select('username geo');
@@ -854,9 +863,9 @@ exports.userProfile = async (req, res) => {
     // CHATCH USER TOKEN 
     const token = req.cookies['Auth-Token'];
 
-    await axios.get(process.env.VISITORS_API).then(data => {
+    /*await axios.get(process.env.VISITORS_API).then(data => {
         console.log(data.data.value);
-    })
+    })*/
     //CHECK IF TOKEN EXIST
     if (!token) {
         console.error('Token Not Found!')
@@ -1770,6 +1779,60 @@ exports.publicAds = async (req, res) => {
         });
     } catch (err) {
         next(err);
+    }
+}
+
+// UPDATE PROFILE SETTINGS - 2FACTORY
+exports.updateProfileSettings = async (req, res) => {
+    // GET TOKEN AS COOKIE FORM REQUEST OBJECT
+    const Token = req.cookies['Auth-Token'];
+    // GET REQUEST DATA FROM REQUEST OBJECT
+    const settingsObj = req.body;
+
+    //CHECK TOKEN IF VALIDE OR NOT
+    if (!Token) {
+        return res.status(401).redirect('/login')
+    }
+
+    try {
+        // VERIFY & DECODE TOKEN
+        jwt.verify(Token, process.env.REFRESH_TOKEN, { algorithms: ['SHA256', 'HS256'] }, async (err, payload) => {
+            // CHECK IF ERROR EXIST
+            if (err) {
+                return res.status(400).json({ status: 400, msg: 'Invalid Token / Expires!' })
+            }
+
+            // GET THE USERNAME FROM THE TOKEN DATA
+            const { id, username } = payload;
+            // CHECK IF THE GIVEN USER EXIST OR NOT
+            await User.findById(id, async (err, user_payload) => {
+                if (err) return res.status(400).json({ success: false, msgError: "Failed To Lookup For Provided User ID!" })
+
+                if (!user_payload || user_payload == null || user_payload == undefined) {
+                    return res.status(404).json({ success: false, msgError: "User With Given Token ID Not Exist!" });
+                }
+                // CHECK IF THE USER ABLE / DISABLE THE 2-FACTORY SECURITY
+                let isEnabled = '';
+                if (settingsObj.is2FactoryEnable == "true") {
+                    isEnabled = 'Enabled'
+                } else if (settingsObj.is2FactoryEnable == "false") {
+                    isEnabled = 'Disabled'
+                }
+                // UPDATE USER 2-Factory Security Setting option
+                user_payload.is2FEnable = Boolean(settingsObj.is2FactoryEnable);
+                await user_payload.save((err, payload) => {
+                    if (err) return res.status(400).json({ success: 400, msgError: 'Failed While Updating User State!' })
+                    console.log(payload);
+                    // RESPOND TO THE CLIENT
+                    res.status(200).json({ success: true, response: `2-Factory Option: ${isEnabled}` })
+
+                })
+            })
+
+        })
+    } catch (err) {
+        console.log(err.message)
+        res.status(500).json({ status: 500, msg: 'Internal Server Error!' })
     }
 }
 

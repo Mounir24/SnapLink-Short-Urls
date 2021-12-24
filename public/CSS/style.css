@@ -4654,6 +4654,49 @@ a {
 }
 /*------ END STYLING SHORT URL BLOCK -------*/
 
+/*----- START STYLING PROFILE SETTINGS BLOCK -----*/
+.profile-settings-area {
+  width: 100%;
+}
+
+.settings-wrapper {
+  margin-top: 0.5rem;
+}
+.settings-wrapper > .Settings-Form {
+  /*display: flex;
+  justify-content: start !important;
+  align-items: center;*/
+  display: block;
+}
+
+.Settings-Form > .form-check {
+  margin-right: 2.5rem !important;
+}
+
+.settings-wrapper > .option-hint {
+  font-family: "rajdhani", sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #d1d1d1;
+}
+
+.setting-update-btn {
+  padding: 10px 55px;
+  outline: none;
+  border: none;
+  background: linear-gradient(70deg, hsl(224, 76%, 59%), hsl(225, 40%, 72%));
+  border-radius: 24px;
+  font-family: "rajdhani", sans-serif;
+  font-size: 17px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: hsl(192, 15%, 97%);
+  margin-top: 1.5rem;
+  letter-spacing: 1.2px;
+}
+/*----- END STYLING PROFILE SETTINGS BLOCK -----*/
+
 /*------ RESPONSIVE LAYOUTS: MOBILE ViewPort --> 360PX ------*/
 @media only screen and(max-width: 360px) {
   .page_404_main {

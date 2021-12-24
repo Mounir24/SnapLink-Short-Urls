@@ -121,6 +121,38 @@
             </div>
         </div>
     </div>
+    <!-- USER SETTINGS AREA -->
+    <section class="profile-settings-area">
+        <div class="container">
+            <h2 class="settings-title">Settings</h2>
+            <div class="row">
+                <div class="col-12 col-md-10 col-sm-6">
+                    <div class="settings-wrapper">
+                        <!-- OPTIONS HINT -->
+                        <span class="option-hint">
+                            Enable / Disable the 2-FACTORY for Security Access:
+                        </span>
+                        <form class="Settings-Form" id="2-Factory">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="is2FactoryEnable" id="2F-NO" value="false">
+                                <label class="form-check-label" for="2F-NO">
+                                    NO
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="is2FactoryEnable" id="2F-YES" value="true">
+                                <label class="form-check-label" for="2F-YES">
+                                    YES
+                                </label>
+                            </div>
+                            <!-- UPDATE SETTINGS -->
+                            <button type="submit" class="btn setting-update-btn" id="settings-update-btn">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- ANALYTICS SECTION (URLS - CLICKS) -->
     <section class="user-analytics-area w-100">
         <div class="container">
@@ -183,6 +215,8 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/JS/custom.js"></script>
     <!--CHART ANIMATION JS (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
@@ -250,4 +284,6 @@
         });
 
     </script>
+    <!-- SWEET ALERT JS (CDN) -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <%- include('partials/_footer.ejs') %>
