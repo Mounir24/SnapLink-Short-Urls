@@ -1,5 +1,5 @@
 const POST_DATA = async (url = '', data = {}, method = '') => { const response = await fetch(url, { method: method, headers: { "Content-Type": "Application/json" }, body: JSON.stringify(data) }); return response.json() }
-const BASE_URL3 = 'http://www.snplnk.link'; const emailBtn = document.getElementById('email-btn'); const emailForm = document.getElementById('email_form'); const email_forms = document.getElementsByClassName('email_form'); const forms_arr = [...email_forms]; forms_arr.forEach(form => {
+const BASE_URL3 = 'https://www.snplnk.link'; const emailBtn = document.getElementById('email-btn'); const emailForm = document.getElementById('email_form'); const email_forms = document.getElementsByClassName('email_form'); const forms_arr = [...email_forms]; forms_arr.forEach(form => {
     form.addEventListener('submit', async (e) => {
         const formBtn = form.lastElementChild; e.preventDefault(); formBtn.style.opacity = 0.4; formBtn.innerText = 'Sending...'; const unindexed_arr = $(form).serializeArray(); const data = {}; $.map(unindexed_arr, (n, i) => { data[n.name] = n.value }); if (!data || data === null || data === undefined) { alert('No data mapped to the DATA object!'); return }
         console.log(data)

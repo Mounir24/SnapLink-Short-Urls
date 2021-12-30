@@ -2,7 +2,7 @@
 // MINI BLOG REST API CREATED BY  ** MOUNIR EL BERTOULI **
 
 /*----- START -----*/
-const BASE_URL3 = 'http://www.snplnk.link';
+const BASE_URL3 = 'https://www.snplnk.link';
 
 // INITIATE THE HELPER FUNCTION (GetBlogData)
 const GET_BLOG_DATA = async (url = '', data = {}, method = '') => {
