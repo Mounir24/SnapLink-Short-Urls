@@ -1,5 +1,5 @@
 // URL ENDPOINTS - BASE URL
-const BASE_URL = "https://www.snplnk.link";
+const BASE_URL = "http://www.snplnk.link";
 const API_URL = `${BASE_URL}${atob('L2FkbWluL2FwaS92MS9hZHM=')}`;
 
 //GET DOM ELEMENTS 

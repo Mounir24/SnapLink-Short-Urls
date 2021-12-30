@@ -9,7 +9,7 @@ const POST_DATA = async (url = '', data = {}, method = '') => {
     return response.json()
 }
 // BASE URL: https://short-url-snaplink.herokuapp.com
-const SNP_BASE_URL = 'https://www.snplnk.link/';
+const SNP_BASE_URL = 'http://www.snplnk.link/';
 
 // SWEET ALERT DIALOGS 
 const SWEET_ALERTS = (type, name, desc) => {
