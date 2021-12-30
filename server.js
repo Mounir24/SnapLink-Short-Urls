@@ -37,7 +37,7 @@ app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard({ action: 'deny' }));
 app.use(helmet.xssFilter());
 app.use(helmet.ieNoOpen());
-app.use(helmet.hsts({ maxAge: 24 * 60 * 60 })); // FORCE HTTPS ONLY 
+//app.use(helmet.hsts({ maxAge: 24 * 60 * 60 })); // FORCE HTTPS ONLY 
 app.use(helmet.dnsPrefetchControl());
 app.use(helmet.noSniff())
 app.use(helmet.contentSecurityPolicy({
