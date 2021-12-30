@@ -29,7 +29,7 @@ exports.registerUser = async (req, res, next) => {
     const { email, username, password, captcha } = req.body;
 
     // BASE URL ---> SNAPLINK 
-    const BASE_URL = "https://short-url-snaplink.herokuapp.com";
+    const BASE_URL = "http://www.snplnk.link";
     /*recaptchaValidation(req, res, captcha);*/
     try {
         // CAPCTHA VALIDATION
