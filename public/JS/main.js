@@ -8,7 +8,7 @@ const POST_DATA2 = async (url = '', data, method = '') => {
     return response.json()
 }
 const CUSTOM_ALERTS = (TP, title = '', txt) => { if (TP === 'success') { swal({ title: title, text: txt, icon: TP, button: "GOT IT" }); return } else if (TP === 'warning') { swal({ title: title, text: txt, icon: TP, button: "GOT IT", }) } else if (TP === 'DangerMode') { swal({ title: 'Are You Sure ?', text: "Are Sure wanna Unblock This User ? ", icon: "warning", buttons: !0, dangerMode: !0, }).then((willDelete) => { if (willDelete) { swal(txt, { icon: "success", }); return } }) } else { return null } }
-const BASE_URL = 'http://www.snplnk.link';
+const BASE_URL = 'https://www.snplnk.link';
 const alertWarning = document.getElementById('alert_warn')
 const alertDanger = document.getElementById('alert_danger');
 const validator = { isEmpty(str) { if (str.trim() === '') { return !0 } else { return !1 } }, isEmail(email) { const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; if (email.match(emailPattern)) { return !0 } else { return !1 } }, isLength(str, lng) { if (str.length < lng) { return !0 } else { return !1 } } }
