@@ -20,7 +20,7 @@ $('#2-Factory').submit(async (e) => {
     })
 
     // POST THE CURRENT SETTINGS TO THE SERVER
-    await PostSettings(`https://www.snplnk.link/${API_ENDPOINT}`, settingObj, 'POST')
+    await PostSettings(`https://www.snplnk.link${API_ENDPOINT}`, settingObj, 'POST')
         .then(data => {
             if (data.success) {
                 swal({
