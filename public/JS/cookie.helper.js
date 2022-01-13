@@ -1,14 +1,29 @@
 // GET VERIFY TOKEN ACCESS COOKIE
-function GET_COOKIE() {
+/*function GET_COOKIE() {
     // PLAN TO PARSE COOKIES
     const allCookies = document.cookie.split(';')[1];
     const uid_cookie = allCookies.substring(5);
     //console.log(uid_cookie4);
     return uid_cookie;
+}*/
+
+const checkCookieName = (cookie) => {
+    const cookies = document.cookie;
+    const cookieStorage = cookies.split(';');
+    /*console.log(cookieStorage);*/
+    let current_cookie_target = '';
+    for (let i = 0; i < cookieStorage.length; i++) {
+        if (cookieStorage[i].trim().startsWith(cookie)) {
+            current_cookie_target = cookieStorage[i];
+            return current_cookie_target;
+        } else {
+            continue;
+        }
+    }
 }
 
 // FINAL UID COOKIE
-const UID_COOKIE = GET_COOKIE();
+const UID_COOKIE = checkCookieName('UID').trim().replace('UID=', '');
 const Verify_Token_Form = document.getElementById('verify_token_form');
 Verify_Token_Form.insertAdjacentHTML('afterBegin', `<input type="hidden" id="uid" value="${UID_COOKIE.trim()}">`);
 
