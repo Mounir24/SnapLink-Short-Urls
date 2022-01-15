@@ -81,11 +81,12 @@ const BASE_URL1 = 'https://www.snplnk.link';
 
                     td1.innerHTML = index++;
                     td2.innerHTML = `<span class="url_source"><a href="${source}" target="_blank" style="text-decoration: none;">${source}</span>`;
-                    td3.innerHTML = `<span class="url_tag">${url_tag} <i class="bx bxl-${url_tag === 'snaplink' ? 'react' : url_tag === 'l.facebook' ? 'facebook' : url_tag}"></i></span>`;
+                    td3.innerHTML = `<span class="url_tag"><img src="https://icons.duckduckgo.com/ip3/${domain.hostname}.ico" width="25px" height="25px"> </span>`;
                     row.append(td1);
                     row.append(td2);
                     row.append(td3);
                     sources_body.append(row);
+                    /*<i class="bx bxl-${url_tag === 'snaplink' ? 'react' : url_tag === 'l.facebook' ? 'facebook' : url_tag}"></i>*/
                 });
 
             } else if (data.status === 400) {

@@ -374,7 +374,8 @@ exports.homeStatics = async (req, res, next) => {
 
 // GRAB ALL USRLS
 exports.urlsData = async (req, res) => {
-    const originUrl = req.protocol + '://' + req.get('host') + '/';
+    // IF THE CURRENT URL PROTOCOL NOT CORRECT USE: req.protocol
+    const originUrl = 'https://' + req.get('host') + '/';
 
     // CHECK IF ERROR EXIST 
     /*if (err === 401) {

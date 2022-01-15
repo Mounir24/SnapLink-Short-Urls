@@ -15,7 +15,7 @@
     <meta property="og:description"
         content="SnapLink - Free short URLs online service - Short url - Track URLs source - share your url">
     <meta property="og:image"
-        content="https://res.cloudinary.com/snaplink/image/upload/v1635643328/SnapLink_Short_URL_otjbn0.jpg">
+        content="https://icons.duckduckgo.com/ip3/<%= new URL(url).hostname %>.ico">
     <meta property="og:url" content="http://www.snplnk.link/">
     <meta property="twitter:title" content="SnapLink | Free Url Shortner, Branded Short Links">
     <meta property="twitter:description"
@@ -48,10 +48,14 @@
             <div class="row mx-auto">
                 <div class="col-md-12 p-5">
                     <div class="redirect__content text-center">
+                        <div class="url_favicon mb-3" style="width:35px;height:35px;">
+                            <img src="https://icons.duckduckgo.com/ip3/<%= new URL(url).hostname %>.ico" alt="">
+                        </div>
                         <div class="counter mb-5">
                             <h1 class="redirect__count">10</h1>
                         </div>
-                        <span class="count__title">redirecting...</span>
+                        <span class="count__title">redirecting...
+                        </span>
                     </div>
                 </div>
             </div>

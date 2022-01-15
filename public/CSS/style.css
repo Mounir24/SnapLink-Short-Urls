@@ -4652,6 +4652,18 @@ a {
   right: -3px;
   width: 25%;
 }
+
+.url_favicon {
+  width: 25px;
+  height: 25px;
+  margin-right: 1.2rem;
+}
+
+.url_favicon > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 /*------ END STYLING SHORT URL BLOCK -------*/
 
 /*----- START STYLING PROFILE SETTINGS BLOCK -----*/

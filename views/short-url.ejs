@@ -225,6 +225,10 @@
                     <% urls.forEach(item=> { %>
                         <tr>
                             <td>
+                                <div class="url_favicon">
+                                    <!-- ORIGINAL URL FAVICON SPOT -->
+                                    <img src="https://icons.duckduckgo.com/ip3/<%= new URL(item.original_url).hostname %>.ico" alt="">
+                                </div>
                                 <div class="url">
                                     <%= item.original_url %>
                                 </div>

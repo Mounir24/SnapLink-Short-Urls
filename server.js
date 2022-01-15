@@ -18,7 +18,7 @@ const adminRoute = require('./routes/adminRoute');
 const httpLogger = require('./services/util/logger/logger')
 
 // WHITELIST 
-const whitelist = ['https://www.snplnk.link', 'https://snplnk.link', 'https://v.fastcdn.co', 'https://res.cloudinary.com', 'https://short-url-snaplink.herokuapp.com', 'https://cdnjs.cloudflare.com', 'https://cdn.deliver.net', 'https://restcountries.eu', 'https://unpkg.com'];
+const whitelist = ['https://www.snplnk.link', 'https://icons.duckduckgo.com', 'https://snplnk.link', 'https://v.fastcdn.co', 'https://res.cloudinary.com', 'https://short-url-snaplink.herokuapp.com', 'https://cdnjs.cloudflare.com', 'https://cdn.deliver.net', 'https://restcountries.eu', 'https://unpkg.com'];
 // CORS Options 
 const corsOptions = {
     origin: (origin, callback) => {

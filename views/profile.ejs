@@ -183,8 +183,8 @@
     <!-- USER PRIVATE URLS TABLE -->
     <div class="container urls_list">
         <h2 class="label mx-auto">My Own Urls</h2>
-        <div class="row mx-auto">
-            <div class="col-md-10">
+        <div class="row mx-auto w-100">
+            <div class="col-md-12">
                 <table class="table table-striped mt-5 text-center w-100">
                     <thead class="thead-bg text-center">
                         <tr>
@@ -202,7 +202,11 @@
                                         <%= index +1 %>
                                     </span>
                                 </td>
-                                <td>
+                                <td class="d-flex justify-content-start align-items-center">
+                                    <div class="url_favicon">
+                                        <!-- ORIGINAL URL FAVICON SPOT -->
+                                        <img src="https://icons.duckduckgo.com/ip3/<%= new URL(url.original_url).hostname %>.ico" alt="">
+                                    </div>
                                     <div class="url">
                                         <%= url.original_url %>
                                     </div>
