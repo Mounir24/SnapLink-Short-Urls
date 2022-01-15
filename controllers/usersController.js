@@ -505,7 +505,7 @@ exports.createUrl = async (req, res, next) => {
     }
 
     // BASE URL
-    const BASE_URL = req.protocol + '://' + req.get('host') + '/';
+    const BASE_URL = 'https://' + req.get('host') + '/';
 
     async function IS_SLUG_EXIST() {
         try {
