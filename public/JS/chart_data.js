@@ -1,7 +1,7 @@
 /*---- GRAPHICING DATA --> CHART.JS LIBRARY ----*/
 // API FOR GRAPHCING DATA USAGE
 // BASE URL: https://short-url-snaplink.herokuapp.com (ORIGINAL)
-const BASE_URL1 = 'http://localhost:8080';
+const BASE_URL1 = 'https://www.snplnk.link';
 
 (async function () {
     // FETCH DATA FROM API 
