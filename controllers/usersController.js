@@ -823,6 +823,38 @@ exports.singleUrl = async (req, res, next) => {
     };
     const url_country = await get_url_country();
 
+    (async () => {
+        // CHECK IF THE VISITOR SESSION HAS BEEN EXPIRED - REMOVE IT FROM SESSIONS DB
+        if (req.cookies['VISITOR_SESSION']) {
+            // GET CURRENT VISITOR SESSION
+            const current_session = req.cookies['VISITOR_SESSION'];
+            // QUERY THE DB --> VISITORS_SESSION
+            await visitors_session.findOne({ session_id: current_session }, async (err, results) => {
+                if (err) return console.error(err.message);
+                // GET THE STARTED SESSION DATE
+                const started_session_date = results.started_Date;
+                // CURRENT DATE (YYYY-MM-DD)
+                const current_date = new Date().toISOString().substring(0, 10);
+
+                // CHECK IF THE VISITOR SESSION DATE HAS BEEN EXPIRED OR NOT
+                if (current_date < started_session_date) {
+                    // SESSION STILL ACTIVE
+                    console.log('SESSION ID: ' + current_session + 'STILL ACTIVE');
+                } else {
+                    // SESSION HAS BEEN EXPIRED , AND SHOULD BE REMOVED
+                    await visitors_session.findOneAndDelete({ session_id: current_session }, (err, payload) => {
+                        if (err) return console.error(err.message) // ECHO THE ERROR IF OCCURS
+                        if (payload) {
+                            // VISITOR SESSION HAS BEEN REMOVED FROM DB
+                            console.log('VISITOR SESSION ID: ' + payload.session_id + 'HAS BEEN REMOVED!')
+                        }
+
+                    })
+                }
+            })
+        }
+    })();
+
     // CHECK THE VISITOR COOKIE IF EXIST OR NOT  --> VISITOR_SESSION
     if (!req.cookies['VISITOR_SESSION']) {
         // IF NOT EXIST CREATE A NEW --> VISITOR COOKIE CONTAINS: VISITOR IP + CURRENT DATE + SLUGs (EXPIRES IN)
