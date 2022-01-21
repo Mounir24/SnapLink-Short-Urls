@@ -9,6 +9,7 @@ const fetch = require('node-fetch');
 const createError = require('http-errors');
 const csrf = require('csurf'); // CSRF PROTECTION MODULE 
 const SHORT_ID = require('shortid');
+const { randomBytes } = require('crypto'); // RANDOM BYTES - CRYPTO MODULE
 
 // IMPORT MODELS AND HELPERS
 const User = require('../model/userSchema'); // USER SCHEMA
@@ -16,6 +17,7 @@ const Articles = require('../model/articleSchema'); // ARTICLES MODEL MODULE
 const Admins = require('../model/adminSchema'); // ADMIN SCHEMA
 const Ads_Banners = require('../model/adsSchema'); // ADS SCHEMA MODEL
 const Subscribers = require('../model/subscriberSchema'); // NewsLetter Model / Schema
+const visitors_session = require('../model/visitors_session_schema'); // VISITORS SESSION MODEL
 const mail = require('../configuration/mail'); // MAILER
 const validator = require('../services/util/validator'); // VALIDATOR
 const { TOKEN_LOGGER } = require('../services/util/logger/token-logger');
@@ -662,31 +664,29 @@ exports.singleUrl = async (req, res, next) => {
         console.log(data.data.value);
     })
 
-    // CHECK IF THE URL SOURCE NULL || UNDEFINED
-    if (!referer_source || referer_source === null || referer_source === undefined) {
-        referer_source = 'https://www.snaplink.com';
+    // ADDING URL CLICKED SOURCE (www.snaplink.com)
+    const push_url_source = (collection, refer) => {
+        // URLs SOURCES CONTAINER []
+        const sources_urls = url_structure_source(collection, referer_source);
+        try {
+            Url.updateOne(refer, { sources: sources_urls }, (err, url) => {
+                if (err) {
+                    return next(createError(404, 'ERROR: While Updating URL!'));
+                }
+
+                if (url) {
+                    track_sources_urls();
+                    return true;
+                } else {
+                    return false;
+                }
+            })
+        } catch (err) {
+            console.log(err);
+            return next(err);
+        }
     }
 
-    const get_url_country = async () => {
-        let url_location;
-        try {
-            await axios.get(`https://api.ipify.org?format=json`)
-                .then(async data => {
-                    await axios.get(`https://ipapi.co/${data.data.ip}/json/`)
-                        .then(data => {
-                            console.log(data.data.country_name)
-                            url_location = data.data.country_name;
-                        })
-                })
-        } catch (err) {
-            console.log(err)
-            return;
-        }
-        console.log('URL Country (1): ' + url_location);
-        return url_location;
-    };
-    const url_country = await get_url_country();
-    //console.log(referer_source);
     // URL SOURCE INITAITE 
     const url_structure_source = (col, url_src) => {
         let sources_arr = col.sources;
@@ -694,29 +694,6 @@ exports.singleUrl = async (req, res, next) => {
         mutable_sources_arr.push(url_src);
         return mutable_sources_arr;
     }
-
-    // KEEP TRACK OF THE USER's PRIVATE-URLS  (CLICKS-SOURCES)
-    const find_user_by_url_id = async () => {
-        let user;
-        try {
-            await Url.findOne({ short_url: inputShort }, (err, user_payload) => {
-                if (err) {
-                    return next(craeteError(400, 'ERROR: Something Went Wrong While Getting User By URL ID!'));
-                }
-
-                if (!user_payload || user_payload === null || user_payload === undefined) {
-                    return next(createError(404, 'USER NOT FOUND WITH GIVEN URL ID!'));
-                }
-                user = [user_payload.createdBy, user_payload._id];
-            })
-            return user;
-        } catch (err) {
-            console.log(err);
-            s
-            return next(err);
-        }
-    };
-
 
     const track_sources_urls = async () => {
         // GET RETURNED VALUE FROM THE BELOW FUNCTION
@@ -804,52 +781,192 @@ exports.singleUrl = async (req, res, next) => {
         }
     };
 
-    // ADDING URL CLICKED SOURCE (www.snaplink.com)
-    const push_url_source = (collection, refer) => {
-        // URLs SOURCES CONTAINER []
-        const sources_urls = url_structure_source(collection, referer_source);
+    // KEEP TRACK OF THE USER's PRIVATE-URLS  (CLICKS-SOURCES)
+    const find_user_by_url_id = async () => {
+        let user;
         try {
-            Url.updateOne(refer, { sources: sources_urls }, (err, url) => {
+            await Url.findOne({ short_url: inputShort }, (err, user_payload) => {
                 if (err) {
-                    return next(createError(404, 'ERROR: While Updating URL!'));
+                    return next(craeteError(400, 'ERROR: Something Went Wrong While Getting User By URL ID!'));
                 }
 
-                if (url) {
-                    track_sources_urls();
-                    return true;
-                } else {
-                    return false;
+                if (!user_payload || user_payload === null || user_payload === undefined) {
+                    return next(createError(404, 'USER NOT FOUND WITH GIVEN URL ID!'));
                 }
+                user = [user_payload.createdBy, user_payload._id];
             })
+            return user;
         } catch (err) {
             console.log(err);
+            s
             return next(err);
         }
-    }
-    try {
-        await Url.findOne({ short_url: inputShort }, (err, result) => {
-            if (!err && result !== null) {
-                result.clicks++;
-                if (!push_url_source(result, { short_url: inputShort })) {
-                    result.save();
-                    res.render('redirect', { url: result.original_url });
-                } else {
-                    console.log('URL SOURCE NOT UPDATED!')
-                    return next(createError(400, 'URL SOURCE NOT UPDATED!'));
+    };
+
+    const get_url_country = async () => {
+        let url_location;
+        try {
+            await axios.get(`https://api.ipify.org?format=json`)
+                .then(async data => {
+                    await axios.get(`https://ipapi.co/${data.data.ip}/json/`)
+                        .then(data => {
+                            console.log(data.data.country_name)
+                            url_location = data.data.country_name;
+                        })
+                })
+        } catch (err) {
+            console.log(err)
+            return;
+        }
+        console.log('URL Country (1): ' + url_location);
+        return url_location;
+    };
+    const url_country = await get_url_country();
+
+    // CHECK THE VISITOR COOKIE IF EXIST OR NOT  --> VISITOR_SESSION
+    if (!req.cookies['VISITOR_SESSION']) {
+        // IF NOT EXIST CREATE A NEW --> VISITOR COOKIE CONTAINS: VISITOR IP + CURRENT DATE + SLUGs (EXPIRES IN)
+        const JS_SESSION = randomBytes(6).toString('hex'); // COOKIE NAME
+        console.log('COOKIE SESSION: ' + JS_SESSION);
+        // GET: URL SLUG & VISITOR IP 
+        let visitor_ip = '';
+        await axios.get('https://api.ipify.org?format=json')
+            .then(data => {
+                visitor_ip = data.data.ip; // CURRENT VISITOR IP
+            }).catch(err => {
+                console.log(err.message);
+                next(err)
+            })
+
+        //ADD &  STRUCTURE 
+        const visitor_session = new visitors_session({
+            ip: visitor_ip,
+            slugs: [inputShort],
+            session_id: JS_SESSION
+        });
+
+        // CREATE A VISITOR SESSION TO DB 
+        await visitor_session.save(async (err, payload) => {
+            if (err) return console.error(err.message);
+            console.log(payload)
+            // CHECK IF THE PAYLOAD NULL
+            if (payload || payload != null) {
+                try {
+                    await Url.findOne({ short_url: inputShort }, (err, result) => {
+                        if (!err && result !== null) {
+                            result.clicks++;
+                            if (!push_url_source(result, { short_url: inputShort })) {
+                                result.save();
+                                // SESSION OPTIONS CONFIGURATION
+                                let options = {
+                                    maxAge: 1000 * 60 * 60 * 24, // would expire after 15 minutes
+                                    httpOnly: false, // The cookie will be accessible by client-side (Browser)
+                                }
+                                payload.slugs.push(inputShort);
+                                res.cookie('VISITOR_SESSION', payload.session_id, options);
+                                res.render('redirect', { url: result.original_url });
+                            } else {
+                                console.log('URL SOURCE NOT UPDATED!')
+                                return next(createError(400, 'URL SOURCE NOT UPDATED!'));
+                            }
+                            //result.sources.push(referer_source);
+                        } // Success
+                        else {
+                            res.status(404);
+                            //let outputRes = { id: inputShort };
+                            return res.render("404", { shortId: inputShort });
+                            //res.json({ message: "URL Doesn't Exist!" });
+                        }
+                    });
+                } catch (err) {
+                    console.log(err);
+                    next(err);
                 }
-                //result.sources.push(referer_source);
-            } // Success
-            else {
-                res.status(404);
-                //let outputRes = { id: inputShort };
-                return res.render("404", { shortId: inputShort });
-                //res.json({ message: "URL Doesn't Exist!" });
             }
         });
-    } catch (err) {
-        console.log(err);
-        next(err);
+        return;
+    } else {
+        // CHECK IF THE URL SOURCE NULL || UNDEFINED
+        if (!referer_source || referer_source === null || referer_source === undefined) {
+            referer_source = 'https://www.snplnk.link';
+        }
+        //console.log(referer_source);
+
+
+
+        try {
+            await Url.findOne({ short_url: inputShort }, async (err, result) => {
+                if (!err && result !== null) {
+                    // TAKE THE VISITOR SESSION COOKIE
+                    const vr_session = req.cookies['VISITOR_SESSION'];
+                    // FETCH THE SESSION OBJECT AT DB  - CHECK IF THE VISITOR SESSION EXIST
+                    await visitors_session.findOne({ session_id: vr_session }, async (err, SESSION_PAYLOAD) => {
+                        if (err) return console.error(err.message);
+                        // IF THE SESSION NOT EXIST - REDIRECT IT TO THE ORIGINAL URL
+                        if (SESSION_PAYLOAD === null || SESSION_PAYLOAD === undefined) {
+                            console.log('VISITOR SESSION NOT VALID: ' + vr_session)
+                            result.clicks++;
+                            if (!push_url_source(result, { short_url: inputShort })) {
+                                result.save();
+                                return res.render('redirect', { url: result.original_url });
+                            } else {
+                                console.log('URL SOURCE NOT UPDATED!')
+                                return next(createError(400, 'URL SOURCE NOT UPDATED!'));
+                            }
+
+                            return;
+                        }
+
+                        console.log(SESSION_PAYLOAD);
+                        // MAP ALL THE SESSION SLUGS , AND SEARCH IF THE CURRENT URL SLUG EXIST IN THE SESSION's SLUGS
+                        /*const isSlugFound = SESSION_PAYLOAD.slugs.find(SLUG => {
+                            return SLUG == inputShort ? true : false;
+                        })*/
+
+                        console.log('isSlugFound: ' + SESSION_PAYLOAD.slugs.includes(inputShort));
+                        const isSlugFound = SESSION_PAYLOAD.slugs.includes(inputShort);
+                        if (!isSlugFound) {
+                            await visitors_session.findOneAndUpdate({ session_id: SESSION_PAYLOAD.session_id }, { $push: { slugs: inputShort } }, { $new: true }, (err, payload) => {
+                                if (err) return console.error(err.message);
+                                result.clicks++;
+                                if (!push_url_source(result, { short_url: inputShort })) {
+                                    result.save();
+                                    return res.render('redirect', { url: result.original_url });
+                                } else {
+                                    console.log('URL SOURCE NOT UPDATED!')
+                                    return next(createError(400, 'URL SOURCE NOT UPDATED!'));
+                                }
+                            });
+                            return;
+                        } else {
+                            // CHECK IF THE ERROR EXIST 
+                            //result.clicks++;
+                            if (!push_url_source(result, { short_url: inputShort })) {
+                                //result.save();
+                                res.render('redirect', { url: result.original_url });
+                            } else {
+                                console.log('URL SOURCE NOT UPDATED!')
+                                return next(createError(400, 'URL SOURCE NOT UPDATED!'));
+                            }
+
+                        }
+                    })
+                    // CHECK IF THE PROVIDED SESSION HAD ALREADY VISITED THE SHORTED URL --> SLUG
+                    //result.sources.push(referer_source);
+                } // Success
+                else {
+                    res.status(404);
+                    //let outputRes = { id: inputShort };
+                    return res.render("404", { shortId: inputShort });
+                    //res.json({ message: "URL Doesn't Exist!" });
+                }
+            });
+        } catch (err) {
+            console.log(err);
+            next(err);
+        }
     }
+
 }
 
 // LOGOUT CONTROLL
