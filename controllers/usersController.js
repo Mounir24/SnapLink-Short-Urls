@@ -310,13 +310,21 @@ exports.loginUser = async (req, res, next) => {
                                 user.login_token = TOKEN;
                                 // UPDATE USER GEO IP ENTRY
                                 user.geo[0]['ip'] = CURRENT_IP;
-                                await user.save((err, payload) => {
+                                await user.save(async (err, payload) => {
                                     if (err) {
                                         console.error(err.message)
                                         next(createError(400, err.message))
                                     }
                                     // LOG THE TOKEN TO THE LOGGER FILE
-                                    TOKEN_LOGGER(req.url, TOKEN, username);
+                                    await TOKEN_LOGGER(req.url, TOKEN, username, (err, result) => {
+                                        if (err) {
+                                            return console.error(err.message);
+                                        }
+
+                                        if (result) {
+                                            console.log('TOKEN HAS BEEN ASSIGNED SUCCESSFULLY 100% --> LOGGER')
+                                        }
+                                    });
                                     // SEND THE TOKEN TO LIGITIMATE USER
                                     const mailOpts = {
                                         from: process.env.EMAIL,
