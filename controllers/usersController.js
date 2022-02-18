@@ -563,7 +563,8 @@ exports.createUrl = async (req, res, next) => {
         }
 
         // ASIGN PRIVATE URLS TO SEPECIFIC USER
-        const USER_PV = USER;
+        const PRIVATE_URLS_WRAPER = await User.findById(USER.id)
+        const USER_PV = PRIVATE_URLS_WRAPER;
         let newPv_Arr = USER_PV.privateUrls;
 
         // ADDING NEW ENTRY TO THE PRIVATE URLs (SOURCES - CLICKS) TO KEEP TRACK OF THE URLS
