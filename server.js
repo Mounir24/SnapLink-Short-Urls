@@ -99,9 +99,9 @@ app.use(async (err, req, res, next) => {
 
 app.use('/blogs', articlesRoute);
 app.use('/admin', adminRoute);
-app.all('*', (req, res) => {
+/*app.all('*', (req, res) => {
     return res.status(200).render('404');
-})
+})*/
 
 // START DB CONNECTION 
 dbConnection();
