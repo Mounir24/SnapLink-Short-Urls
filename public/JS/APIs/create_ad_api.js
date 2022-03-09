@@ -9,7 +9,7 @@ const POST_DATA = async (url = '', data = {}, method = '') => {
     return response.json()
 }
 // BASE URL: https://short-url-snaplink.herokuapp.com
-const SNP_BASE_URL = 'https://www.snplnk.link';
+const SNP_BASE_URL = 'http://localhost:8080';
 
 // SWEET ALERT DIALOGS 
 const SWEET_ALERTS = (type, name, desc) => {
@@ -81,6 +81,7 @@ document.getElementById('plan_form').addEventListener('submit', (e) => {
         // SEND SUBSCRIPTIONS PLAN POST REQUEST 
         POST_DATA(`${SNP_BASE_URL}${atob('L2FwaS92MS9wbGFuX3JlcXVlc3Q=')}`, data, 'POST')
             .then(info => {
+                console.log(info)
                 if (info.confirmation === true) {
                     SWEET_ALERTS('success', 'Subscription Plan Requested!', `Your Subscription Plan: ${data['ad-budget']} Has Been requested , we\"ll review it soon!`)
                 } else if (info.status === 400) {

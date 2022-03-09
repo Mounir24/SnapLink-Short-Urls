@@ -18,7 +18,7 @@ const adminRoute = require('./routes/adminRoute');
 const httpLogger = require('./services/util/logger/logger')
 
 // WHITELIST 
-const whitelist = ['https://www.snplnk.link', 'https://icons.duckduckgo.com', 'https://snplnk.link', 'https://v.fastcdn.co', 'https://res.cloudinary.com', 'https://short-url-snaplink.herokuapp.com', 'https://cdnjs.cloudflare.com', 'https://cdn.deliver.net', 'https://restcountries.eu', 'https://unpkg.com'];
+const whitelist = ['http://localhost:8080', 'https://www.snplnk.link', 'https://icons.duckduckgo.com', 'https://snplnk.link', 'https://v.fastcdn.co', 'https://res.cloudinary.com', 'https://short-url-snaplink.herokuapp.com', 'https://cdnjs.cloudflare.com', 'https://cdn.deliver.net', 'https://restcountries.eu', 'https://unpkg.com'];
 // CORS Options 
 const corsOptions = {
     origin: (origin, callback) => {
@@ -51,8 +51,8 @@ app.use(helmet.contentSecurityPolicy({
     }
 })); // IMPLEMENT CONTENT SECURITY POLICY (CSP)
 app.use(cors(corsOptions)); // EXECUTE THE CORS MODULE IN ALL ROUTES
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
+app.use(bodyParser.json({ limit: "10mb" }));
 app.use(morgan('tiny'));
 app.use(cookieParser());
 app.use(httpLogger); // HTTP TRAFFIC LOGGER MODULE
@@ -81,7 +81,7 @@ app.use('/', userRoute);
 // ERROR HANDLER MIDDLEWARE
 app.use(async (err, req, res, next) => {
     //console.log(err.message);
-    //console.log(err);
+    console.log(err);
     if (err instanceof URIError) {
         err.message = "Failed To Decode URI: " + req.params;
         /*console.log(err);
