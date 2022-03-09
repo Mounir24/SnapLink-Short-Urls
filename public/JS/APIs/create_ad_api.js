@@ -65,6 +65,8 @@ file_target.addEventListener('change', BANNER_PREV_IMG);
 
 // CREATE A SUBSCRIPTION PLAN API ENDPOINT
 document.getElementById('plan_form').addEventListener('submit', (e) => {
+    // GET BUTTON FORM DOM
+    const ad_form_btn = document.getElementById('offer-btn-form');
     e.preventDefault();
     // GET FILE BANNER INPUT 
     const banner_file = document.getElementById('ad-banner').files[0];
@@ -75,13 +77,19 @@ document.getElementById('plan_form').addEventListener('submit', (e) => {
     $.map(unindexed_array_pl, (n) => {
         data[n['name']] = n.value
     });
+
+    ad_form_btn.style.opacity = 0.5;
+    ad_form_btn.innerText = "Requesting Plan ..."
+    ad_form_btn.setAttribute('disabled', true);
     toBase64(banner_file).then(async BASE64 => {
         // APPEND BANNER FILE AS BASE64 FORMAT
         data['banner'] = BASE64;
         // SEND SUBSCRIPTIONS PLAN POST REQUEST 
         POST_DATA(`${SNP_BASE_URL}${atob('L2FwaS92MS9wbGFuX3JlcXVlc3Q=')}`, data, 'POST')
             .then(info => {
-                console.log(info)
+                ad_form_btn.style.opacity = 1;
+                ad_form_btn.innerText = "Create Plan Request";
+                ad_form_btn.setAttribute('disabled', false);
                 if (info.confirmation === true) {
                     SWEET_ALERTS('success', 'Subscription Plan Requested!', `Your Subscription Plan: ${data['ad-budget']} Has Been requested , we\"ll review it soon!`)
                 } else if (info.status === 400) {
