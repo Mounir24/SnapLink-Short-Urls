@@ -9,7 +9,7 @@ const POST_DATA = async (url = '', data = {}, method = '') => {
     return response.json()
 }
 // BASE URL: https://short-url-snaplink.herokuapp.com
-const SNP_BASE_URL = 'https://www.snplnk.link/';
+const SNP_BASE_URL = 'https://www.snplnk.link';
 
 // SWEET ALERT DIALOGS 
 const SWEET_ALERTS = (type, name, desc) => {
@@ -119,13 +119,7 @@ document.getElementById('ad-form-btn').addEventListener('click', async () => {
     toBase64(fileInp).then(async BASE64 => {
         data['ad-banner'] = BASE64;
         console.log(data);
-        // FLY THE POST REQUEST 
-        /*await POST_DATA(`${SNP_BASE_URL}/admin/api/v1/ads/create`, data, 'POST').then(data => {
-            if (data.status === 201) {
-                alert('NEW COMPAIGN HAS BEEN ADDED 100%');
-                console.log(data);
-            }
-        })*/
+        // FLY THE POST REQUEST
         await fetch(`${SNP_BASE_URL}${atob('L2FkbWluL2FwaS92MS9hZHMvY3JlYXRl')}`, {
             method: 'POST',
             headers: {
@@ -149,51 +143,3 @@ document.getElementById('ad-form-btn').addEventListener('click', async () => {
         console.log(err);
     })
 });
-
-// BASE URL
-/*const SNP_BASE_URL = 'http://localhost:4041';
-
-// CREATE NEW AD API - (POST)
-$('#ad-mngr-form').submit(async e => {
-    e.preventDefault();
-    // AD DATA OBJECT
-    const data = {};
-    // SERIALZE FORM
-    const unindexed_array = $('#ad-mngr-form').serializeArray();
-    const fileInput = document.getElementById('ad-banner');
-    // MAP THROUGH "UNINDEXED ARRAY"
-    $.map(unindexed_array, (n, i) => {
-        data[n.name] = n.value
-    });*/
-/******************for base 64 *****************************/
-/*(function () {
-    var file = fileInput.files[0];
-    var reader = new FileReader();
-    reader.onloadend = function () {
-        console.log('Encoded Base 64 File String:', reader.result);
-        // APPEND FILE AS AD BANNER
-        data.ad_banner = reader.result;*/
-/******************* for Binary ***********************/
-/*var data = (reader.result).split(',')[1];
-var binaryBlob = atob(data);
-console.log('Encoded Binary File String:', binaryBlob);*/
-/*}
-alert('FILE UNCODED SUCCESSFULLY 100%')
-reader.readAsDataURL(file);
-})();
-// FLY THE POST REQUEST
-console.log(data);
-try {
-await POST_DATA(`${SNP_BASE_URL}/admin/api/v1/ads/create`, data, 'POST')
-    .then(data => {
-        if (data.status === 201) {
-            alert('COMPAIGN ADDED SUCCESSFULLY 100%');
-            console.log(data.msg);
-        } else {
-            alert(data.errorMsg)
-        }
-    })
-} catch (err) {
-alert(err.message);
-}
-})*/
