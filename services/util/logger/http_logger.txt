@@ -11372,3 +11372,6 @@ IP: {41.141.50.120} . Method: {GET} . URL: {/JS/main.js} . Status: {304} . Conte
 IP: {41.141.50.120} . Method: {GET} . URL: {/JS/scrollAnimation.js} . Status: {304} . Content-Length: {-} . Response-Time: {4.445} .Time-stamp: {3/9/2022, 10:15:12 PM}
 IP: {41.141.50.120} . Method: {GET} . URL: {/svg/snapLink-logo.svg} . Status: {304} . Content-Length: {-} . Response-Time: {1.696} .Time-stamp: {3/9/2022, 10:15:12 PM}
 IP: {41.141.50.120} . Method: {POST} . URL: {/api/v1/plan_request} . Status: {201} . Content-Length: {40563} . Response-Time: {1952.311} .Time-stamp: {3/9/2022, 10:17:14 PM}
+IP: {160.178.6.64} . Method: {GET} . URL: {/blog/dzdkn} . Status: {404} . Content-Length: {149} . Response-Time: {6.086} .Time-stamp: {5/20/2022, 3:02:03 PM}
+IP: {160.178.6.64} . Method: {GET} . URL: {/blog/dzdkn} . Status: {404} . Content-Length: {149} . Response-Time: {5.639} .Time-stamp: {5/20/2022, 3:02:37 PM}
+IP: {160.178.6.64} . Method: {GET} . URL: {/blog/92387} . Status: {404} . Content-Length: {149} . Response-Time: {3.463} .Time-stamp: {5/20/2022, 3:02:41 PM}

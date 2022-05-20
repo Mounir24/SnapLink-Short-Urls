@@ -15,6 +15,9 @@ const Articles = require('../model/articleSchema'); // ARTICLES MODEL MODULE
 
 
 
+
+
+
 // LIST ARTICLE CONTROLLER
 // exports.getArticles = async (req, res, next) => {
 //     // CATCH THE TOKEN 

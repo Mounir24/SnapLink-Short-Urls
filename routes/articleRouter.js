@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const multer = require('multer'); // UPLOADING FILES MODULE
 //const session = require('express-session');
 
@@ -51,6 +51,11 @@ const upload = multer({ storage: storage })
 
 // GET SINGLE ARTICLE CONTROLLER
 router.get('/blog', articlesCtrl.getSingleBlog);
+
+// GET (TEST)
+router.get('/:blog_id/', (req, res, next) => {
+    return res.status(200).json({ status: 200, data: req.params });
+})
 
 // CREATE NEW ARTICLE ROUTE
 router.post('/create', upload.single('poster'), articlesCtrl.createArticle)
